@@ -16,6 +16,8 @@ def token_required(f):
             return jsonify({'message': 'Token is required'}), 401
         try:
             data = jwt.decode(token, key, algorithms=["HS256"])
+            if data["exp"] < datetime.datetime.utcnow():
+                return jsonify({"message":"Token expired"}), 401
             current_user = User.query.filter_by(email=data["email"]).first()
         except:
             return jsonify({'message': 'Token is invalid'}), 401
@@ -24,7 +26,7 @@ def token_required(f):
     
 @auth.route('/signup',methods=["POST"])
 def signup():
-    data = request.get_json()    
+    data = request.get_json()
     if type(data["email"]) == type("") and type(data["password"]) == type(""):
         if len(data["email"]) > 0 and len(data["password"]) > 0:
             if User.query.filter_by(email=data["email"]).first() == None:
