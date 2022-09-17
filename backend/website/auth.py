@@ -4,6 +4,8 @@ from .models.usermodel import User
 import jwt
 from functools import wraps
 import datetime
+from datetime import timezone, timedelta
+from dateutil import parser
 auth = Blueprint('auth', __name__)
 
 def token_required(f):
@@ -13,14 +15,16 @@ def token_required(f):
         if 'token' in request.headers:
             token = request.headers['token']
         if not token:
-            return jsonify({'message': 'Token is required'}), 401
+            return jsonify({'status':'autherror','message': 'Token is required'})
         try:
             data = jwt.decode(token, key, algorithms=["HS256"])
-            if data["exp"] < datetime.datetime.utcnow():
-                return jsonify({"message":"Token expired"}), 401
+            print(data)
             current_user = User.query.filter_by(email=data["email"]).first()
         except:
-            return jsonify({'message': 'Token is invalid'}), 401
+            return jsonify({'status':'autherror','message': 'Token is invalid'})
+        # print(datetime.datetime.utcfromtimestamp(data['exp']),datetime.datetime.now(timezone.utc))
+        if datetime.datetime.utcfromtimestamp(data['exp']) < datetime.datetime.utcnow():
+            return jsonify({'status':'autherror',"message":"Token expired"})
         return f(current_user, *args, **kwargs)
     return decorator
     
@@ -50,7 +54,7 @@ def login():
             user = User.query.filter_by(email=data["email"]).first()
             if user:
                 if bcrypt.check_password_hash(user.password, data["password"]):
-                    token = jwt.encode({"email":user.email,"roles":user.roles, "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=60)}, key, algorithm="HS256")
+                    token = jwt.encode({"email":user.email,"roles":user.roles, "exp": datetime.datetime.now(timezone.utc) + timedelta(minutes=60)}, key, algorithm="HS256")
                     return {"status":"success","message":"User logged in successfully","token":token}
                 else:
                     return {"status":"error","message":"Incorrect password"}

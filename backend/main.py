@@ -1,13 +1,10 @@
-import os, sys
+import os
 import json
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from flask_bcrypt import Bcrypt
-from flask import Blueprint, render_template, request, redirect, session, g
 from website import newapp
+from setup import setup_db
 
 app = newapp()
-
+setup_db()
 with open('settings.json','r') as f:
     settings = json.loads(f.read())
 if __name__ == "__main__":
