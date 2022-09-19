@@ -48,7 +48,7 @@ def signup():
 
 @auth.route("/login",methods=["POST"])
 def login():
-    data = request.get_json()#
+    data = request.get_json()
     if type(data["email"]) == type("") and type(data["password"]) == type(""):
         if len(data["email"]) > 0 and len(data["password"]) > 0:
             user = User.query.filter_by(email=data["email"]).first()
