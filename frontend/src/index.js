@@ -6,6 +6,6 @@ import LoginPage from './LoginPage';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <div>
-        <LoginPage/> {/*tutorial component */}
+        <LoginPage/> {/*tutorial componend */}
     </div>
 );
