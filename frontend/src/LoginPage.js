@@ -38,7 +38,7 @@ class LoginPage extends React.Component {
         })
         .then((res) => {
             console.log(res);
-            if (res.data.status == "success") {
+            if (res.data.status === "success") {
                 window.sessionStorage.setItem("token", res.data.token);
                 this.setState({}); // need to call setstate to rerun the code hidden in checkToken() without full page reload
             }
@@ -82,7 +82,7 @@ class LoginPage extends React.Component {
         .then((res) => {
             console.log(res); // while the request itself will return code 200 (success), the backend will return a custom status in res.data.status which is what
             // should be checked to see if the request was successful
-            if (res.data.status == "success") {
+            if (res.data.status === "success") {
                 alert("success");
                 // need to redirect to login page
             }
@@ -98,12 +98,12 @@ class LoginPage extends React.Component {
         this.setState({});
     }
     checkToken() {
-        if (window.sessionStorage.getItem("token") != "undefined" && window.sessionStorage.getItem("token") != null){ 
+        if (window.sessionStorage.getItem("token") !== "undefined" && window.sessionStorage.getItem("token") != null){ 
             // if we have a token, someone successfully logged in. the token may be expired, however, so 
             // on every api request the backend checks if the token is valid. if it is valid, the backend returns what we requested.
             // if not, the backend returns {'status':'autherror', 'message': [something]}
             // this function only checks if it is present, not if it is valid
-            return (
+            return ( // these html components are revealed when the user is logged in
                 <div>
             <form onSubmit={this.submitProcrastinationForm}><input type="submit" value="Submit Procrastination Form"/></form>
             <button onClick={this.logout}>Log Out</button>
@@ -116,8 +116,8 @@ class LoginPage extends React.Component {
         return(
             <div>
                 <form onSubmit={this.handleLogin}>
-                    <input type="text" placeholder='username' name='email' required onChange={this.handleEmailChange}/>
-                    <input type="text" placeholder='password' name='password' required onChange={this.handlePasswordChange}/>
+                    <input type="text" placeholder='email' name='email' required onChange={this.handleEmailChange}/>
+                    <input type="password" placeholder='password' name='password' required onChange={this.handlePasswordChange}/>
                     <input type="submit" value="Log In"/>
                 </form>
                 <form onSubmit={this.handleSignup}>
