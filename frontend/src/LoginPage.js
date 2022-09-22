@@ -40,6 +40,7 @@ class LoginPage extends React.Component {
             console.log(res);
             if (res.data.status === "success") {
                 window.sessionStorage.setItem("token", res.data.token);
+                window.sessionStorage.setItem("roles", res.data.roles);
                 this.setState({}); // need to call setstate to rerun the code hidden in checkToken() without full page reload
             }
             else {
@@ -97,19 +98,60 @@ class LoginPage extends React.Component {
         // need to redirect to login page in the future
         this.setState({});
     }
+    getTeacherDashboard = (e) => {
+        e.preventDefault();
+        axios({
+            method: 'get',
+            url: '/teacher/dashboard',
+            headers: {
+                'Content-Type': 'application/json',
+                "token":window.sessionStorage.getItem("token")
+            }
+        })
+        .then((res) => {
+            console.log(res);
+            if (res.data.status === "success") {
+                alert("success");
+                document.getElementById("teacherdashboard").innerHTML = res.data.data;
+                this.setState({});
+                // need to redirect to login page
+            }
+            else {
+                alert(res.data.message);
+            }
+        })
+    }
     checkToken() {
         if (window.sessionStorage.getItem("token") !== "undefined" && window.sessionStorage.getItem("token") != null){ 
             // if we have a token, someone successfully logged in. the token may be expired, however, so 
             // on every api request the backend checks if the token is valid. if it is valid, the backend returns what we requested.
             // if not, the backend returns {'status':'autherror', 'message': [something]}
             // this function only checks if it is present, not if it is valid
-            return ( // these html components are revealed when the user is logged in
-                <div>
-            <form onSubmit={this.submitProcrastinationForm}><input type="submit" value="Submit Procrastination Form"/></form>
-            <button onClick={this.logout}>Log Out</button>
-            </div>
-            )
-
+            if (window.sessionStorage.getItem("roles") == "teacher") {
+                return (
+                    <div>
+                        <form onSubmit={this.getTeacherDashboard}>
+                            <input type="submit" value="Get Teacher Dashboard"/>
+                        </form>
+                        <form onSubmit={this.logout}>
+                            <input type="submit" value="Log Out"/>
+                        </form>
+                        <div id="teacherdashboard"></div>
+                    </div>
+                )
+                }
+            else {
+                return (
+                    <div>
+                        <form onSubmit={this.submitProcrastinationForm}>
+                            <input type="submit" value="Submit Procrastination Form"/>
+                        </form>
+                        <form onSubmit={this.logout}>
+                            <input type="submit" value="Log Out"/>
+                        </form>
+                    </div>
+                )
+            }
         }
     }
     render() {
