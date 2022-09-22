@@ -8,3 +8,8 @@ class User(db.Model, UserMixin):
     roles = db.Column(db.Text, nullable=False, default="student")
     last_submission = db.Column(db.DateTime, nullable=True)
     password = db.Column(db.String(150), nullable=False)
+
+    def __repr__(self) -> str:
+        data = vars(self)
+        desired_data = ['id', 'email', 'roles', 'last_submission']
+        return str({key: data[key] for key in desired_data})
