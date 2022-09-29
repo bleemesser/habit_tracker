@@ -1,0 +1,12 @@
+.nav {
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    margin: 10px;
+}
+
+.box {
+    margin-right: 0px;
+    margin-left: auto;
+    float: right;
+}
