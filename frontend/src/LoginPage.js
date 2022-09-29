@@ -65,33 +65,7 @@ class LoginPage extends React.Component {
             console.log(res);
         })
     }
-    submitProcrastinationForm = (e) => {
-        e.preventDefault();
-        axios({
-            method: 'post',
-            url: '/submit/procrastination',
-            headers: {
-                'Content-Type': 'application/json',
-                "token":window.sessionStorage.getItem("token")
-            },
-            data: {
-                "q1": "some_value",
-                "q2": "some_other_value",
-                "q3": "some_other_other_value"
-            }
-        })
-        .then((res) => {
-            console.log(res); // while the request itself will return code 200 (success), the backend will return a custom status in res.data.status which is what
-            // should be checked to see if the request was successful
-            if (res.data.status === "success") {
-                alert("success");
-                // need to redirect to login page
-            }
-            else {
-                alert(res.data.message);
-            }
-        })
-    }
+    
     logout = (e) => {
         e.preventDefault();
         window.sessionStorage.clear();
