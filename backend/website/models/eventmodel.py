@@ -4,7 +4,8 @@ class Event(db.Model):
     __bind_key__ = "events"
     id = db.Column(db.Integer, primary_key=True)
     type = db.Column(db.String(150), nullable=False)
-    date = db.Column(db.DateTime(timezone=True), default=func.now())
+    date_submitted = db.Column(db.DateTime(timezone=True), default=func.now())
+    event_date = db.Column(db.DateTime(timezone=True), nullable=False)
     owner = db.Column(db.String(150), nullable=False)
     data = db.Column(db.JSON, nullable=False)
     
