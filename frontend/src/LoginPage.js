@@ -1,7 +1,6 @@
 import React from 'react'
 import axios from 'axios';
 
-
 class LoginPage extends React.Component {
     constructor(props) {
         super(props);
@@ -10,7 +9,6 @@ class LoginPage extends React.Component {
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
         this.handleSignup = this.handleSignup.bind(this);
-        this.submitProcrastinationForm = this.submitProcrastinationForm.bind(this);
         this.checkToken = this.checkToken.bind(this);
         this.logout = this.logout.bind(this);
     }
@@ -113,18 +111,6 @@ class LoginPage extends React.Component {
                         <div id="teacherdashboard"></div>
                     </div>
                 )
-                }
-            else {
-                return (
-                    <div>
-                        <form onSubmit={this.submitProcrastinationForm}>
-                            <input type="submit" value="Submit Procrastination Form"/>
-                        </form>
-                        <form onSubmit={this.logout}>
-                            <input type="submit" value="Log Out"/>
-                        </form>
-                    </div>
-                )
             }
         }
     }
@@ -143,6 +129,5 @@ class LoginPage extends React.Component {
             </div>
         )
     }
-    
 }
 export default LoginPage;
