@@ -21,3 +21,11 @@ def register_sleep(current_user):
     print(req, current_user)
     # once the questions are more concrete, we can add the data to the database here
     return {"status":"success","message":"Sleep registered successfully"}
+
+@form.route("/feelings",methods=["POST"])
+@token_required
+def register_feelings(current_user):
+    req = request.get_json()
+    print(req, current_user)
+    # once the questions are more concrete, we can add the data to the database here
+    return {"status":"success","message":"Feelings registered successfully"}
