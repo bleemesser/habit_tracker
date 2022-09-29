@@ -11,8 +11,8 @@ import {
   Route,
   Outlet
 } from "react-router-dom";
-import {NavBar} from "./components/NavBar"
-import {Home} from "./components/Home"
+import {NavBar} from "./components/NavBar.js"
+import Home from "./components/Home.js"
 
 const container = document.getElementById('root');
 const root = createRoot(container);
