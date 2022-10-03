@@ -7,8 +7,8 @@ def newapp():
     app.secret_key = key
     # app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///data.db"
     app.config["SQLALCHEMY_BINDS"] = {
-        "users": "sqlite:///users.db",
-        "events": "sqlite:///events.db"
+        "users": "sqlite:///data.db",
+        "events": "sqlite:///data.db"
     }
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.init_app(app)

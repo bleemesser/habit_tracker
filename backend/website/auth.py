@@ -53,8 +53,8 @@ def teacher_token_required(f): # basically the same as token_required but requir
 @auth.route('/signup',methods=["POST"])
 def signup():
     data = request.get_json()
-    if type(data["email"]) == type("") and type(data["password"]) == type("") and type(data["teacher"]) == type("") and type(data["blocknum"]) == type(1) and type(data["name"]) == type(""):
-        if len(data["email"]) > 0 and len(data["password"]) > 0 and len(data["teacher"]) > 0 and data["blocknum"] > 0 and len(data["name"]) > 0:
+    if type(data["email"]) == type("") and type(data["password"]) == type("") and type(data["teacher"]) == type("") and type(data["blocknum"]) == type("") and type(data["name"]) == type(""):
+        if len(data["email"]) > 0 and len(data["password"]) > 0 and len(data["teacher"]) > 0 and int(data["blocknum"]) > 0 and len(data["name"]) > 0:
             if User.query.filter_by(email=data["email"]).first() == None:
                 hashed_password = bcrypt.generate_password_hash(data["password"]).decode('utf-8')
                 new_user = User(email=data["email"], password=hashed_password, teacher=data["teacher"], blocknum=data["blocknum"], name=data["name"])
@@ -69,14 +69,14 @@ def signup():
         return {"status":"error","message":"Data is of invalid type"}
 
 @auth.route('/create_teacher',methods=["POST"])
-@teacher_token_required
-def create_teacher(current_user):
+# @teacher_token_required
+def create_teacher():
     data = request.get_json()
-    if type(data["email"]) == type("") and type(data["password"]) == type(""):
+    if type(data["email"]) == type("") and type(data["password"]) == type("") and type(data["name"]) == type(""):
         if len(data["email"]) > 0 and len(data["password"]) > 0:
             if User.query.filter_by(email=data["email"]).first() == None:
                 hashed_password = bcrypt.generate_password_hash(data["password"]).decode('utf-8')
-                new_user = User(email=data["email"], password=hashed_password, roles="teacher")
+                new_user = User(email=data["email"], password=hashed_password, roles="teacher", name=data["name"])
                 db.session.add(new_user)
                 db.session.commit()
                 return {"status":"success","message":"Teacher user created successfully"}

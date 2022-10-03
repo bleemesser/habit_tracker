@@ -14,4 +14,6 @@ teacher = Blueprint('teacher', __name__)
 def dashboard(current_user):
     # pull users from database and send it to the frontend
     users = User.query.filter_by(roles="student").all()
+    # print(users)
     return {"status":"success","message":"Data found successfully", "data": f"{users}"}
+
