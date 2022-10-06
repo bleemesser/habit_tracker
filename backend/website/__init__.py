@@ -1,6 +1,8 @@
 from flask import Flask
 import os
-from .extensions import db,key
+from .extensions import db, key
+
+
 def newapp():
     app = Flask(__name__)
 
@@ -8,7 +10,7 @@ def newapp():
     # app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///data.db"
     app.config["SQLALCHEMY_BINDS"] = {
         "users": "sqlite:///data.db",
-        "events": "sqlite:///data.db"
+        "events": "sqlite:///data.db",
     }
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.init_app(app)
@@ -17,7 +19,8 @@ def newapp():
     from .form import form
     from .auth import auth
     from .teacher import teacher
-    app.register_blueprint(auth,url_prefix="/auth")
-    app.register_blueprint(form,url_prefix="/submit")
-    app.register_blueprint(teacher,url_prefix="/teacher")
+
+    app.register_blueprint(auth, url_prefix="/auth")
+    app.register_blueprint(form, url_prefix="/submit")
+    app.register_blueprint(teacher, url_prefix="/teacher")
     return app

@@ -1,11 +1,11 @@
-from flask import Blueprint, render_template, request, redirect, session,jsonify
+from flask import Blueprint, request,jsonify
 from .extensions import db, bcrypt,key
 from .models.usermodel import User
 import jwt
 from functools import wraps
 import datetime
 from datetime import timezone, timedelta
-from dateutil import parser
+# from dateutil import parser
 auth = Blueprint('auth', __name__)
 
 def token_required(f):
@@ -69,7 +69,7 @@ def signup():
         return {"status":"error","message":"Data is of invalid type"}
 
 @auth.route('/create_teacher',methods=["POST"])
-# @teacher_token_required
+@teacher_token_required
 def create_teacher():
     data = request.get_json()
     if type(data["email"]) == type("") and type(data["password"]) == type("") and type(data["name"]) == type(""):
