@@ -14,6 +14,7 @@ export function NavBar() {
             <div className="box">
             <Link id="final" className="link" to="/">Home</Link>
             <Link id="final" className="link" to="/login">Login</Link>
+            <Link id="final" className="link" to="/teacher/dashboard">Teacher Dashboard</Link>
             <button className="button" onClick={logoutClick}>Logout</button>
             </div>
         </div>

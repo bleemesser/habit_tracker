@@ -13,6 +13,7 @@ import {
 } from "react-router-dom";
 import {NavBar} from "./components/NavBar.js"
 import Home from "./components/Home.js"
+import TeacherDashboard from "./components/TeacherDashboard.js"
 
 const container = document.getElementById('root');
 const root = createRoot(container);
@@ -22,6 +23,7 @@ root.render(
       <Route path="/" element= {<LayoutsWithNavbar />}>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/teacher/dashboard" element={<TeacherDashboard />} />
       </Route>
       <Route path="*" element={
         <p>Uh oh! It looks like you lost your way :D </p>

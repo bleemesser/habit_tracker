@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-// import Home from 'frontend/src/components/Home.js';
+import './Home.css';
+
 
 class Home extends React.Component {
     constructor(props) {
