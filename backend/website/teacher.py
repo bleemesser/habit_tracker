@@ -11,15 +11,17 @@ teacher = Blueprint("teacher", __name__)
 
 @teacher.route("/dashboard", methods=["GET"])
 @teacher_token_required
-def dashboard(current_user):
+def dashboard():
     # pull users from database and send it to the frontend
     # does not require any input from the frontend
     users = User.query.filter_by(roles="student").all()
     # print(users)
+    outdata = users
+    # print(outdata)
     return {
         "status": "success",
         "message": "Data found successfully",
-        "data": f"{users}",
+        "data": str(users).replace("'",'"'),
     }
 
 

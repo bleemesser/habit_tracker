@@ -1,6 +1,6 @@
 from traceback import format_exc
 from website.extensions import db
-
+from datetime import datetime
 # from flask_login import UserMixin
 from sqlalchemy import (
     Column,
@@ -33,7 +33,7 @@ class User(db.Model, Base):
 
     def __repr__(self) -> str:
         data = vars(self)
-        data["last_submission"] = data["last_submission"].strftime("%m-%d-%Y")
+        data["last_submission"] = data["last_submission"].strftime("%m-%d-%y")
         desired_data = [
             "id",
             "email",

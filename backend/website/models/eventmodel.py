@@ -26,5 +26,8 @@ class Event(db.Model):
 
     def __repr__(self):
         data = vars(self)
+        data["date_submitted"] = data["date_submitted"].strftime("%m-%d-%Y")
+        data["event_date"] = data["event_date"].strftime("%m-%d-%Y")
+
         desired_data = ["id", "type", "date_submitted", "event_date", "owner", "data"]
         return str({key: data[key] for key in desired_data})

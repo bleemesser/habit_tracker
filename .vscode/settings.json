@@ -1,0 +1,11 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "data",
+            "database": "${workspaceFolder:habits_tracking}/backend/website/data.db"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}
