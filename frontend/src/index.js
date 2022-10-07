@@ -23,7 +23,7 @@ root.render(
       <Route path="/" element= {<LayoutsWithNavbar />}>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/teacher/dashboard" element={<TeacherDashboard />} />
+        <Route path="/t/dashboard" element={<TeacherDashboard />} />
       </Route>
       <Route path="*" element={
         <p>Uh oh! It looks like you lost your way :D </p>
