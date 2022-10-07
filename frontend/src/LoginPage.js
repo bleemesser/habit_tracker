@@ -1,15 +1,17 @@
 import React from 'react'
 import axios from 'axios';
-
+import './LoginPage.css'
 class LoginPage extends React.Component {
     constructor(props) {
         super(props);
-        this.state= {email:"", password:""};
+        this.state= {email:"", password:"", name:"", teacher:"", block:""};
         this.handleEmailChange = this.handleEmailChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
         this.handleSignup = this.handleSignup.bind(this);
-        this.checkToken = this.checkToken.bind(this);
+        this.handleNameChange = this.handleNameChange.bind(this);
+        this.handleTeacherChange = this.handleTeacherChange.bind(this);
+        this.handleBlockChange = this.handleBlockChange.bind(this);
         this.logout = this.logout.bind(this);
     }
     handleEmailChange = (e) => {
@@ -20,6 +22,19 @@ class LoginPage extends React.Component {
         this.setState({"password":e.target.value});
         console.log(this.state);
     }
+    handleNameChange = (e) => {
+        this.setState({"name":e.target.value});
+        console.log(this.state);
+    }
+    handleTeacherChange = (e) => {
+        this.setState({"teacher":e.target.value});
+        console.log(this.state);
+    }
+    handleBlockChange = (e) => {
+        this.setState({"block":e.target.value});
+        console.log(this.state);
+    }
+
     handleLogin = (e) => {
         e.preventDefault();
         window.sessionStorage.clear();
@@ -39,8 +54,7 @@ class LoginPage extends React.Component {
             if (res.data.status === "success") {
                 window.sessionStorage.setItem("token", res.data.token);
                 window.sessionStorage.setItem("roles", res.data.roles);
-                this.setState({}); // need to call setstate to rerun the code hidden in checkToken() without full page reload
-            }
+                this.setState({});            }
             else {
                 alert(res.data.message);
             }
@@ -56,7 +70,10 @@ class LoginPage extends React.Component {
             },
             data: {
                 "email": this.state.email,
-                "password": this.state.password
+                "password": this.state.password,
+                "teacher": this.state.teacher,
+                "blocknum": this.state.block,
+                "name": this.state.name
             }
         })
         .then((res) => {
@@ -70,62 +87,26 @@ class LoginPage extends React.Component {
         // need to redirect to login page in the future
         this.setState({});
     }
-    getTeacherDashboard = (e) => {
-        e.preventDefault();
-        axios({
-            method: 'get',
-            url: '/teacher/dashboard',
-            headers: {
-                'Content-Type': 'application/json',
-                "token":window.sessionStorage.getItem("token")
-            }
-        })
-        .then((res) => {
-            console.log(res);
-            if (res.data.status === "success") {
-                alert("success");
-                document.getElementById("teacherdashboard").innerHTML = res.data.data;
-                this.setState({});
-                // need to redirect to login page
-            }
-            else {
-                alert(res.data.message);
-            }
-        })
-    }
-    checkToken() {
-        if (window.sessionStorage.getItem("token") !== "undefined" && window.sessionStorage.getItem("token") != null){ 
-            // if we have a token, someone successfully logged in. the token may be expired, however, so 
-            // on every api request the backend checks if the token is valid. if it is valid, the backend returns what we requested.
-            // if not, the backend returns {'status':'autherror', 'message': [something]}
-            // this function only checks if it is present, not if it is valid
-            if (window.sessionStorage.getItem("roles") == "teacher") {
-                return (
-                    <div>
-                        <form onSubmit={this.getTeacherDashboard}>
-                            <input type="submit" value="Get Teacher Dashboard"/>
-                        </form>
-                        <form onSubmit={this.logout}>
-                            <input type="submit" value="Log Out"/>
-                        </form>
-                        <div id="teacherdashboard"></div>
-                    </div>
-                )
-            }
-        }
-    }
     render() {
         return(
-            <div>
-                <form onSubmit={this.handleLogin}>
-                    <input type="text" placeholder='email' name='email' required onChange={this.handleEmailChange}/>
-                    <input type="password" placeholder='password' name='password' required onChange={this.handlePasswordChange}/>
-                    <input type="submit" value="Log In"/>
-                </form>
-                <form onSubmit={this.handleSignup}>
-                    <input type="submit" value="Sign Up"/>
-                </form>
-                {this.checkToken()}
+            <div className='container'>
+                <div className='form-group form-1'>
+                    <form>
+                        <input className="form-control" type="text" placeholder='Email' name='email' required onChange={this.handleEmailChange}/>
+                        <input className="form-control" type="password" placeholder='Password' name='password' required onChange={this.handlePasswordChange}/>
+                        <input className="form-control btn submitbtn btn-secondary" type="submit" onClick={this.handleLogin} value="Log In"/>
+                    </form>
+                    <form>
+                        <input className="form-control" type="text" placeholder="Name" name="name" required onChange={this.handleNameChange}/>
+                        <input className="form-control" type="text" placeholder='Email' name='email' required onChange={this.handleEmailChange}/>
+                        <input className="form-control" type="password" placeholder='Password' name='password' required onChange={this.handlePasswordChange}/>
+                        <input className="form-control" type="text" placeholder='Teacher' name='teacher' required onChange={this.handleTeacherChange}/>
+                        <input className="form-control" type="number" min={1} max={8} placeholder='Block' name='block' required onChange={this.handleBlockChange}/>
+                        <input className="form-control btn submitbtn btn-secondary" type="submit" onClick={this.handleSignup} value="Sign Up"/>
+                    </form>
+                    <button className="form-control btn btn-danger" onClick={this.logout}>Log Out</button>
+
+                </div>
             </div>
         )
     }

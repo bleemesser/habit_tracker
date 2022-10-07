@@ -25,7 +25,7 @@ def register_procrastination(current_user):
     new_event = Event(
         type="procrastination",
         event_date=datetime.datetime.strptime(req["event_date"], "%Y-%m-%d"),
-        data={"test_key": "test_value"},
+        data=req["data"],
         owner=current_user.id,
     )
     db.session.add(new_event)

@@ -94,12 +94,11 @@ class Home extends React.Component {
     }
     render() {
         return (
-            <div className="delta">
-                <h1 className="homePageTitle">SEL Habit Tracker</h1>
-                <div className="deltaButtons">
-                    <button className="procrastinationButton" onClick={this.submitProcrastinationForm}>Procrastination</button>
-                    <button className="sleepButton" onClick={this.submitSleepForm}>Sleep</button>
-                    <button className="feelingsButton" onClick={this.submitFeelingsForm}>Feelings</button>
+            <div className="container" style={{marginTop:'6vh'}}>
+                <div className="vstack d-flex justify-content-md center align-items-center vh-100 gap-5">                
+                    <a className="btn btn-primary formtype d-flex align-items-center justify-content-center" href="/procrastination" role="button" style={{background: '#ffc7de'}} onClick={this.submitProcrastinationForm}><span>Procrastination</span></a>
+                    <a className="btn btn-primary formtype d-flex align-items-center justify-content-center" href="/sleep" role="button" style={{background: '#bcf3ff'}} onClick={this.submitSleepForm}><span>Sleep</span></a>
+                    <a className="btn btn-primary formtype d-flex align-items-center justify-content-center" href="/feelings" role="button" style={{background: '#feffbc'}} onClick={this.submitFeelingsForm}><span>Feelings</span></a>
                 </div>
             </div>
         );
