@@ -4,7 +4,7 @@ import './LoginPage.css'
 class LoginPage extends React.Component {
     constructor(props) {
         super(props);
-        this.state= {email:"", password:"", name:"", teacher:"", block:""};
+        this.state= {email:"", password:"", name:"", teacher:"", block:"", loggedIn: false};
         this.handleEmailChange = this.handleEmailChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
@@ -54,7 +54,9 @@ class LoginPage extends React.Component {
             if (res.data.status === "success") {
                 window.sessionStorage.setItem("token", res.data.token);
                 window.sessionStorage.setItem("roles", res.data.roles);
-                this.setState({});            }
+                // this.setState({loggedIn: true}); 
+                window.location.reload();
+            }
             else {
                 alert(res.data.message);
             }
