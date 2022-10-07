@@ -12,7 +12,7 @@ import {
   Route,
   Outlet
 } from "react-router-dom";
-import {Navigator} from "./components/Navigator.js"
+import Navigator from "./components/Navigator.js"
 import Home from "./components/Home.js"
 import TeacherDashboard from "./components/TeacherDashboard.js"
 
