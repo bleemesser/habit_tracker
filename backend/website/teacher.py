@@ -11,21 +11,17 @@ teacher = Blueprint("teacher", __name__)
 
 @teacher.route("/dashboard", methods=["GET"])
 @teacher_token_required
-def dashboard():
+def dashboard(current_user):
     # pull users from database and send it to the frontend
     # does not require any input from the frontend
     users = User.query.filter_by(roles="student").all()
-    # print(users)
-    outdata = users
-    # print(outdata)
     return {
         "status": "success",
         "message": "Data found successfully",
-        "data": str(users).replace("'",'"'),
+        "data": str(users).replace("'",'"'), # need to replace single quotes with double quotes for JSON parsing on the frontend
     }
 
-
-@teacher.route("/delete-student", methods=["POST"])
+@teacher.route("/delete-student", methods=["DELETE"])
 @teacher_token_required
 def delete_student(current_user):
     # requires "email" in the request body and a content type of application/json
@@ -63,12 +59,12 @@ def edit_student(current_user):
             )
         )
         db.session.commit()
-    if "block" in data:
+    if "blocknum" in data:
         db.session.execute(
             db.update(User)
             .where(User.email == data["email"])
             .values(
-                block=data["block"],
+                blocknum=data["blocknum"],
             )
         )
         db.session.commit()

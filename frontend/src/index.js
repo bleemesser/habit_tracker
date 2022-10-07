@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom/client';
 import { Link } from 'react-router-dom';
 import './index.css';
 import LoginPage from './LoginPage';
-
+import './assets/css/Navbar-Centered-Brand-icons.css'
+import './assets/bootstrap/css/bootstrap.min.css';
 import { createRoot } from 'react-dom/client';
 import {
   BrowserRouter,
@@ -11,7 +12,7 @@ import {
   Route,
   Outlet
 } from "react-router-dom";
-import {NavBar} from "./components/NavBar.js"
+import {Navigator} from "./components/Navigator.js"
 import Home from "./components/Home.js"
 import TeacherDashboard from "./components/TeacherDashboard.js"
 
@@ -35,7 +36,7 @@ root.render(
 function LayoutsWithNavbar() {
   return (
     <>
-      <NavBar />
+      <Navigator />
       <Outlet />
     </>
   );
