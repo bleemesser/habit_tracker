@@ -14,20 +14,26 @@ teacher = Blueprint("teacher", __name__)
 def dashboard(current_user):
     # pull users from database and send it to the frontend
     # does not require any input from the frontend
-    users = User.query.filter_by(roles="student").all()
+    if current_user.email == "master@teacher":
+        users = User.query.filter(User.email != "master@teacher").all()
+    else:
+        users = User.query.filter_by(roles="student",teacher=current_user.name).all()
     return {
         "status": "success",
         "message": "Data found successfully",
         "data": str(users).replace("'",'"'), # need to replace single quotes with double quotes for JSON parsing on the frontend
     }
 
-@teacher.route("/delete-student", methods=["DELETE"])
+@teacher.route("/delete-student", methods=["POST"])
 @teacher_token_required
 def delete_student(current_user):
     # requires "email" in the request body and a content type of application/json
     data = request.get_json()
     user = User.query.filter_by(email=data["email"]).first()
-    db.session.delete(user)
+    # print(user)
+    db.session.execute(
+        db.delete(User).where(User.email == data["email"])
+    )
     db.session.commit()
     return {
         "status": "success",
@@ -71,4 +77,15 @@ def edit_student(current_user):
     return {
         "status": "success",
         "message": "Student edited successfully",
+    }
+
+@teacher.route("/teacher-names", methods=["GET"])
+def teacher_names():
+    # pull users from database and send it to the frontend
+    # does not require any input from the frontend
+    users = User.query.filter_by(roles="teacher").where(User.email != "master@teacher").all()
+    return {
+        "status": "success",
+        "message": "Data found successfully",
+        "data": str(users).replace("'",'"'), # need to replace single quotes with double quotes for JSON parsing on the frontend
     }

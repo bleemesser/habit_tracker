@@ -34,9 +34,10 @@ class User(db.Model, Base):
     def __repr__(self) -> str:
         data = vars(self)
         # print(data["last_submission"])
-        if data["last_submission"] is None:
-            data["last_submission"] = "None"
-        else:
+        for key in data.keys():
+            if data[key] == None:
+                data[key] = "None"
+        if data["last_submission"] != "None":
             data["last_submission"] = data["last_submission"].strftime("%m-%d-%Y")
     
         # if data["last_submission"] is not  or data["last_submission"] is not "":

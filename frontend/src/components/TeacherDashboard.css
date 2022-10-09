@@ -1,7 +1,6 @@
-table, th, td {
-    border:1px solid black;
-  }
-
-th {
-    margin-right: 25px;
+.editform-submitbtn {
+  margin-top:1vh;
+}
+.teacher-form-input {
+  margin:2vh;
 }

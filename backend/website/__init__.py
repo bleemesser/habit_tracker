@@ -1,7 +1,8 @@
 from flask import Flask
 import os
 from .extensions import db, key
-
+from .models.usermodel import User
+from .createmaster import create_master
 
 def newapp():
     app = Flask(__name__)
@@ -14,6 +15,7 @@ def newapp():
     }
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.init_app(app)
+
     # from .data import data
     # app.register_blueprint(data,url_prefix="/")
     from .form import form
