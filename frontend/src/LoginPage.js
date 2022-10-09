@@ -4,7 +4,7 @@ import './LoginPage.css'
 class LoginPage extends React.Component {
     constructor(props) {
         super(props);
-        this.state= {email:"", password:"", name:"", teacher:"", block:"", loggedIn: false};
+        this.state= {email:"", password:"", name:"", teacher:"", block:"", loggedIn: false,teachers:[]};
         this.handleEmailChange = this.handleEmailChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
@@ -13,26 +13,26 @@ class LoginPage extends React.Component {
         this.handleTeacherChange = this.handleTeacherChange.bind(this);
         this.handleBlockChange = this.handleBlockChange.bind(this);
         this.logout = this.logout.bind(this);
+        this.fetchTeachers = this.fetchTeachers.bind(this);
+        this.renderTeachers = this.renderTeachers.bind(this);
+    }
+    componentDidMount() {
+        this.fetchTeachers();
     }
     handleEmailChange = (e) => {
         this.setState({"email":e.target.value});
-        console.log(this.state);
     }
     handlePasswordChange = (e) => {
         this.setState({"password":e.target.value});
-        console.log(this.state);
     }
     handleNameChange = (e) => {
         this.setState({"name":e.target.value});
-        console.log(this.state);
     }
     handleTeacherChange = (e) => {
         this.setState({"teacher":e.target.value});
-        console.log(this.state);
     }
     handleBlockChange = (e) => {
         this.setState({"block":e.target.value});
-        console.log(this.state);
     }
 
     handleLogin = (e) => {
@@ -55,7 +55,12 @@ class LoginPage extends React.Component {
                 window.sessionStorage.setItem("token", res.data.token);
                 window.sessionStorage.setItem("roles", res.data.roles);
                 // this.setState({loggedIn: true}); 
-                window.location.reload();
+                if (res.data.roles === "teacher"){
+                    window.location.replace("/t/dashboard");
+                }
+                else {
+                    window.location.replace("/s/dashboard");
+                }
             }
             else {
                 alert(res.data.message);
@@ -64,25 +69,69 @@ class LoginPage extends React.Component {
     }
     handleSignup = (e) => {
         e.preventDefault();
-        axios({
-            method: 'post',
-            url: '/auth/signup',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            data: {
-                "email": this.state.email,
-                "password": this.state.password,
-                "teacher": this.state.teacher,
-                "blocknum": this.state.block,
-                "name": this.state.name
+        let canContinue = "";
+        if (this.state.email === "" || this.state.password === "" || this.state.name === "" || this.state.teacher === "" || this.state.block === "") {
+            canContinue = "incomplete";
+        }
+        for (let i = 0; i < this.state.teachers.length; i++) {
+            if (this.state.teachers[i].name === this.state.teacher) {
+                canContinue = "complete";
             }
+        }
+
+        if (canContinue === "complete") {
+            axios({
+                method: 'post',
+                url: '/auth/signup',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                data: {
+                    "email": this.state.email,
+                    "password": this.state.password,
+                    "teacher": this.state.teacher,
+                    "blocknum": this.state.block,
+                    "name": this.state.name
+                }
+            })
+            .then((res) => {
+                if (res.data.status === "success") {
+                    alert("Account created successfully!");
+                }
+                else {
+                    alert("Error: " + res.data.message);
+                }
+            })
+        }
+        else if (canContinue === "incomplete") {
+            alert("Please fill out all fields");
+        }
+        else if (canContinue === "") {
+            alert("Invalid teacher name. Please use one of the names in the dropdown.");
+        }
+    }
+    fetchTeachers = () => {
+        axios({
+            method: 'get',
+            url: '/teacher/teacher-names'
         })
         .then((res) => {
-            console.log(res);
+            let stringArray = `${res.data["data"]}`;
+            let array = JSON.parse(stringArray);
+            this.setState({teachers: array});
         })
+
     }
-    
+    renderTeachers = () => {
+        let teachers = this.state.teachers;
+        let out = [];
+        for (let i = 0; i < teachers.length; i++) {
+            let teacher = teachers[i];
+            // console.log(teacher)
+            out.push(<option key={i} value={teacher["name"]}>{teacher["name"]}</option>);
+        }
+        return out;
+    }
     logout = (e) => {
         e.preventDefault();
         window.sessionStorage.clear();
@@ -94,19 +143,24 @@ class LoginPage extends React.Component {
             <div className='container'>
                 <div className='form-group form-1'>
                     <form>
-                        <input className="form-control" type="text" placeholder='Email' name='email' required onChange={this.handleEmailChange}/>
-                        <input className="form-control" type="password" placeholder='Password' name='password' required onChange={this.handlePasswordChange}/>
-                        <input className="form-control btn submitbtn btn-secondary" type="submit" onClick={this.handleLogin} value="Log In"/>
+                        <input className="form-control form-input" type="text" placeholder='Email' name='email' required onChange={this.handleEmailChange}/>
+                        <input className="form-control form-input" type="password" placeholder='Password' name='password' required onChange={this.handlePasswordChange}/>
+                        <input className="form-control form-input btn submitbtn btn-light" type="submit" onClick={this.handleLogin} value="Log In"/>
                     </form>
                     <form>
-                        <input className="form-control" type="text" placeholder="Name" name="name" required onChange={this.handleNameChange}/>
-                        <input className="form-control" type="text" placeholder='Email' name='email' required onChange={this.handleEmailChange}/>
-                        <input className="form-control" type="password" placeholder='Password' name='password' required onChange={this.handlePasswordChange}/>
-                        <input className="form-control" type="text" placeholder='Teacher' name='teacher' required onChange={this.handleTeacherChange}/>
-                        <input className="form-control" type="number" min={1} max={8} placeholder='Block' name='block' required onChange={this.handleBlockChange}/>
-                        <input className="form-control btn submitbtn btn-secondary" type="submit" onClick={this.handleSignup} value="Sign Up"/>
+                        <input className="form-control form-input" type="text" placeholder="Name" name="name" required onChange={this.handleNameChange}/>
+                        <input className="form-control form-input" type="text" placeholder='Email' name='email' required onChange={this.handleEmailChange}/>
+                        <input className="form-control form-input" type="password" placeholder='Password' name='password' required onChange={this.handlePasswordChange}/>
+                        {/* creating a dropdown with all the teachers */}
+
+                        <input className="form-control form-input" list="teachers" autoComplete='off' type="text" placeholder='Teacher' name='teacher' required onChange={this.handleTeacherChange}/>
+                        <datalist id="teachers">
+                            {this.renderTeachers()}
+                        </datalist>
+                        <input className="form-control form-input" type="number" min={1} max={8} placeholder='Block' name='block' required onChange={this.handleBlockChange}/>
+                        <input className="form-control form-input btn submitbtn btn-light" type="submit" onClick={this.handleSignup} value="Sign Up"/>
                     </form>
-                    <button className="form-control btn btn-danger" onClick={this.logout}>Log Out</button>
+                    <button className="form-control form-input btn btn-light" onClick={this.logout}>Log Out</button>
 
                 </div>
             </div>

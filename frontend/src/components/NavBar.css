@@ -24,12 +24,15 @@
 .navstyle {
     text-align: 'center';
     font-family: "Inika";
+    /* width:8%; */
     font-size: 16pt;
     color:black !important;
+    margin-left:0;
+    margin-right:0;
+    /* padding:0 auto; */
 }
-.absolute-center {
-    position: absolute;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
+.wrapper {
+    width:33.33%;
+    display: flex;
+    justify-content: center;
 }

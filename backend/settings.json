@@ -1,5 +1,9 @@
 {
     "debug":1,
     "port":"5000",
-    "host":"0.0.0.0"
+    "host":"0.0.0.0",
+    "create_master":0,
+    "change_master_password":0,
+    "master_password":""
+
 }
