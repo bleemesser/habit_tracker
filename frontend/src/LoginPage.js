@@ -59,7 +59,7 @@ class LoginPage extends React.Component {
                     window.location.replace("/t/dashboard");
                 }
                 else {
-                    window.location.replace("/s/dashboard");
+                    window.location.replace("/");
                 }
             }
             else {
