@@ -117,6 +117,7 @@ def create_teacher(current_user):
                     password=hashed_password,
                     roles="teacher",
                     name=data["name"],
+                    blocknum=0
                 )
                 db.session.add(new_user)
                 db.session.commit()

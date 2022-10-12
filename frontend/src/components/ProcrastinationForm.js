@@ -5,7 +5,7 @@ import './ProcrastinationForm.css';
 class ProcrastinationForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {q1: '',q2:"",q3:''};
+        this.state = {q1: '',q2:"",q3:'',eventdate:''};
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -22,17 +22,36 @@ class ProcrastinationForm extends React.Component {
         if (qnum === "3") {
           this.setState({q3:e.target.value})
         }
-        if (qnum === "4") {
-          this.setState({q4:e.target.value})
+        if (qnum === "date") {
+          this.setState({eventdate:e.target.value})
         }
         console.log(this.state)
       }
     
     handleSubmit = (e) => {
       e.preventDefault();
-      console.log(this.state.q1.length)
-      
-        }
+      axios({
+        method: 'post',
+        url: '/submit/procrastination',
+        headers: {
+          'Content-Type': 'application/json',
+          'token':window.sessionStorage.getItem('token')
+        },
+        params: {
+          eventdate: this.state.eventdate
+        },
+        data: {
+          q1: this.state.q1,
+          q2: this.state.q2,
+          q3: this.state.q3,
+      }})
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });      
+    }
     
     render() {
     return (
@@ -56,7 +75,7 @@ class ProcrastinationForm extends React.Component {
             </div>
             <div className="q">
               <label htmlFor="q4" >Day of procrastination</label><br/>
-              <input className="form-control form-input" type="date" question="4" onChange={this.handleChange} required/>
+              <input className="form-control form-input" type="date" question="date" onChange={this.handleChange} required/>
             </div>
 
             <input className="form-control form-input btn btn-light" type="submit" value="Submit" />
