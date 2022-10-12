@@ -13,7 +13,8 @@ form = Blueprint("form", __name__)
 @token_required
 def register_procrastination(current_user):
     req = request.get_json()
-    print(req, current_user)
+    # print(req)
+    # print(request.args)
     # update the current_user to have a new last_submission
     db.session.execute(
         db.update(User)
@@ -24,8 +25,8 @@ def register_procrastination(current_user):
     # create a new event
     new_event = Event(
         type="procrastination",
-        event_date=datetime.datetime.strptime(req["event_date"], "%Y-%m-%d"),
-        data=req["data"],
+        event_date=datetime.datetime.strptime(request.args["eventdate"], "%Y-%m-%d"),
+        data=req,
         owner=current_user.id,
     )
     db.session.add(new_event)

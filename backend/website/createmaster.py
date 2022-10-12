@@ -15,6 +15,7 @@ def create_master(app):
                 password=bcrypt.generate_password_hash(settings["master_password"]).decode("utf-8"),
                 roles="teacher",
                 name="Master",
+                blocknum=0
             )
             db.session.add(master)
             db.session.commit()
