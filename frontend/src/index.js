@@ -15,6 +15,7 @@ import {
 import Navigator from "./components/Navigator.js"
 import Home from "./components/Home.js"
 import TeacherDashboard from "./components/TeacherDashboard.js"
+import ProcrastinationForm from './components/ProcrastinationForm';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
@@ -25,6 +26,7 @@ root.render(
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/t/dashboard" element={<TeacherDashboard />} />
+        <Route path="/procrastination" element={<ProcrastinationForm />} />
       </Route>
       <Route path="*" element={
         <p>Uh oh! It looks like you lost your way :D </p>
