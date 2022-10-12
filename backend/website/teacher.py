@@ -2,9 +2,8 @@ from flask import Blueprint, render_template, request, redirect, session, jsonif
 from .extensions import db, bcrypt, key
 from .models.usermodel import User
 from .models.eventmodel import Event
-from functools import wraps
 import datetime
-from .auth import token_required, teacher_token_required
+from .auth import teacher_token_required
 
 teacher = Blueprint("teacher", __name__)
 
@@ -17,12 +16,20 @@ def dashboard(current_user):
     if current_user.email == "master@teacher":
         users = User.query.filter(User.email != "master@teacher").all()
     else:
-        users = User.query.filter_by(roles="student",teacher=current_user.name).all()
+        users = User.query.filter_by(roles="student", teacher=current_user.name).all()
+    sort_type = request.headers["sort"]
+    print(f"sort: {sort_type}")
+    if sort_type == "name":
+        sort = sorted(users, key=lambda x: x.name)
+    elif sort_type == "blocknum":
+        sort = sorted(users, key=lambda x: x.blocknum)
     return {
         "status": "success",
         "message": "Data found successfully",
-        "data": str(users).replace("'",'"'), # need to replace single quotes with double quotes for JSON parsing on the frontend
+        "data": str(sort).replace("'", '"'),
+        # need to replace single quotes with double quotes for JSON parsing on the frontend
     }
+
 
 @teacher.route("/delete-student", methods=["POST"])
 @teacher_token_required
@@ -31,9 +38,7 @@ def delete_student(current_user):
     data = request.get_json()
     user = User.query.filter_by(email=data["email"]).first()
     # print(user)
-    db.session.execute(
-        db.delete(User).where(User.email == data["email"])
-    )
+    db.session.execute(db.delete(User).where(User.email == data["email"]))
     db.session.commit()
     return {
         "status": "success",
@@ -79,13 +84,20 @@ def edit_student(current_user):
         "message": "Student edited successfully",
     }
 
+
 @teacher.route("/teacher-names", methods=["GET"])
 def teacher_names():
     # pull users from database and send it to the frontend
     # does not require any input from the frontend
-    users = User.query.filter_by(roles="teacher").where(User.email != "master@teacher").all()
+    users = (
+        User.query.filter_by(roles="teacher")
+        .where(User.email != "master@teacher")
+        .all()
+    )
     return {
         "status": "success",
         "message": "Data found successfully",
-        "data": str(users).replace("'",'"'), # need to replace single quotes with double quotes for JSON parsing on the frontend
+        "data": str(users).replace(
+            "'", '"'
+        ),  # need to replace single quotes with double quotes for JSON parsing on the frontend
     }

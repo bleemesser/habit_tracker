@@ -7,8 +7,8 @@ from functools import wraps
 import datetime
 from datetime import timezone, timedelta
 
-# from dateutil import parser
 auth = Blueprint("auth", __name__)
+
 
 def token_required(f):
     @wraps(f)
@@ -23,7 +23,6 @@ def token_required(f):
             current_user = User.query.filter_by(email=data["email"]).first()
         except:
             return jsonify({"status": "autherror", "message": "Token is invalid"})
-        # print(datetime.datetime.utcfromtimestamp(data['exp']),datetime.datetime.now(timezone.utc))
         if datetime.datetime.utcfromtimestamp(data["exp"]) < datetime.datetime.utcnow():
             return jsonify({"status": "autherror", "message": "Token expired"})
         return f(current_user, *args, **kwargs)
@@ -31,9 +30,8 @@ def token_required(f):
     return decorator
 
 
-def teacher_token_required(
-    f,
-):  # basically the same as token_required but requires teacher role
+def teacher_token_required(f):
+    # basically the same as token_required but requires teacher role
     @wraps(f)
     def decorator(*args, **kwargs):
         token = None
