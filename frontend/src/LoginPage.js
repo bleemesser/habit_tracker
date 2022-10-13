@@ -145,7 +145,7 @@ class LoginPage extends React.Component {
                     <form>
                         <input className="form-control form-input" type="text" placeholder='Email' name='email' required onChange={this.handleEmailChange}/>
                         <input className="form-control form-input" type="password" placeholder='Password' name='password' required onChange={this.handlePasswordChange}/>
-                        <input className="form-control form-input btn submitbtn btn-light" type="submit" onClick={this.handleLogin} value="Log In"/>
+                        <input className="form-control form-input btn submitbtn btn-dark" type="submit" onClick={this.handleLogin} value="Log In"/>
                     </form>
                     <form>
                         <input className="form-control form-input" type="text" placeholder="Name" name="name" required onChange={this.handleNameChange}/>
@@ -158,9 +158,9 @@ class LoginPage extends React.Component {
                             {this.renderTeachers()}
                         </datalist>
                         <input className="form-control form-input" type="number" min={1} max={8} placeholder='Block' name='block' required onChange={this.handleBlockChange}/>
-                        <input className="form-control form-input btn submitbtn btn-light" type="submit" onClick={this.handleSignup} value="Sign Up"/>
+                        <input className="form-control form-input btn submitbtn btn-dark" type="submit" onClick={this.handleSignup} value="Sign Up"/>
                     </form>
-                    <button className="form-control form-input btn btn-light" onClick={this.logout}>Log Out</button>
+                    <button className="form-control form-input btn btn-dark" onClick={this.logout}>Log Out</button>
 
                 </div>
             </div>

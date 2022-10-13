@@ -5,7 +5,7 @@ import './ProcrastinationForm.css';
 class ProcrastinationForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {q1: '',q2:"",q3:'',eventdate:''};
+        this.state = {q1: '',q2:"",q3:'',q4:'',q5:'',eventdate:''};
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -21,6 +21,9 @@ class ProcrastinationForm extends React.Component {
         }
         if (qnum === "3") {
           this.setState({q3:e.target.value})
+        }
+        if (qnum === "4") {
+          this.setState({q4:e.target.value})
         }
         if (qnum === "date") {
           this.setState({eventdate:e.target.value})
@@ -44,6 +47,8 @@ class ProcrastinationForm extends React.Component {
           q1: this.state.q1,
           q2: this.state.q2,
           q3: this.state.q3,
+          q4: this.state.q4,
+          q5: this.state.q5
       }})
       .then((response) => {
         console.log(response);
@@ -57,7 +62,7 @@ class ProcrastinationForm extends React.Component {
     return (
       <div className="container">
         <div className='form-group form-2'>
-          <form onSubmit={this.handleSubmit}>
+          <form id="pform" onSubmit={this.handleSubmit}>
             <h3>
               Procrastination Form:
             </h3>
@@ -65,20 +70,41 @@ class ProcrastinationForm extends React.Component {
               <label htmlFor="q1" >What were you putting off?</label><br/>
               <input className="form-control form-input" type="text" question="1" onChange={this.handleChange} required placeholder="ie: your Spanish homework..."/>
             </div>
-            <div className="q">
-              <label htmlFor="q2" >What was your distraction?</label><br/>
-              <input className="form-control form-input" type="text" question="2" onChange={this.handleChange} required placeholder="ie: digging into a plate of cheese..."/>
+            <div className='q'>
+              <label htmlFor="q2">What subject was it for (if any)?</label><br/>
+              <select className="form-control form-input" defaultValue={""} question="2" onChange={this.handleChange} required>
+                <option value="" disabled>Select an option</option>
+                <option value="Math">Math</option>
+                <option value="Science">Science</option>
+                <option value="English">English</option>
+                <option value="History">History</option>
+                <option value="Language">Foreign Language</option>
+                <option value="Art">Art/Music</option>
+                <option value="Shop">Ilab/Engineering</option>
+                <option value="Physics">Physics</option>
+                <option value="Extracurricular">Extracurricular</option>
+                <option value="Other">Other</option>
+              </select>
             </div>
             <div className="q">
-              <label htmlFor="q3" >What caused that distraction?</label><br/>
-              <input className="form-control form-input" type="text" question="3" onChange={this.handleChange} required placeholder="ie: ravenous hunger after soccer practice..."/>
+              <label htmlFor="q3" >What was your distraction?</label><br/>
+              <input className="form-control form-input" type="text" question="3" onChange={this.handleChange} required placeholder="ie: digging into a plate of cheese..."/>
             </div>
             <div className="q">
-              <label htmlFor="q4" >Day of procrastination</label><br/>
-              <input className="form-control form-input" type="date" question="date" onChange={this.handleChange} required/>
+              <label htmlFor="q4" >What caused that distraction? — Try and follow a trail of causes</label><br/>
+              <input className="form-control form-input" type="text" question="4" onChange={this.handleChange} required placeholder="ie: ravenous hunger after soccer practice..."/>
+            </div>
+            {/* question that asks "What would you like to try and do about it in the future?" */}
+            <div className="q">
+              <label htmlFor="q5" >What would you like to try and do about it in the future?</label><br/>
+              <input className="form-control form-input" type="text" question="5" onChange={this.handleChange} required placeholder="ie: eat a snack before soccer practice..."/>
             </div>
 
-            <input className="form-control form-input btn btn-light" type="submit" value="Submit" />
+            <div className="q">
+              <label htmlFor="qdate" >Day of procrastination</label><br/>
+              <input className="form-control form-input" type="date" question="date" onChange={this.handleChange} required/>
+            </div>
+            <input className="form-control form-input btn btn-dark" type="submit" value="Submit" />
           </form>
         </div>
       </div>
