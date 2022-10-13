@@ -1,11 +1,11 @@
 import React from 'react';
 import axios from 'axios';
-import './ProcrastinationForm.css';
+import './Form.css';
 
 class ProcrastinationForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {q1: '',q2:"",q3:'',q4:'',q5:'',eventdate:''};
+        this.state = {q1: '',q2:'',q3:'',q4:'',q5:'',eventdate:'',q6:''};
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -28,6 +28,9 @@ class ProcrastinationForm extends React.Component {
         if (qnum === "date") {
           this.setState({eventdate:e.target.value})
         }
+        if (qnum === "6") {
+          this.setState({q6:e.target.value})
+        }
         console.log(this.state)
       }
     
@@ -48,10 +51,12 @@ class ProcrastinationForm extends React.Component {
           q2: this.state.q2,
           q3: this.state.q3,
           q4: this.state.q4,
-          q5: this.state.q5
+          q5: this.state.q5,
+          q6: this.state.q6
       }})
       .then((response) => {
         console.log(response);
+        window.location.replace("/");
       })
       .catch((error) => {
         console.log(error);
@@ -103,6 +108,16 @@ class ProcrastinationForm extends React.Component {
             <div className="q">
               <label htmlFor="qdate" >Day of procrastination</label><br/>
               <input className="form-control form-input" type="date" question="date" onChange={this.handleChange} required/>
+            </div>
+            <div className="q">
+            <label htmlFor="q6">Is this a recurring problem?</label><br/>
+              <select className="form-control form-input" defaultValue={""} question="6" onChange={this.handleChange} required>
+                <option value="" disabled>Select an option</option>
+                <option value="Recurring">This procrastination is recurring</option>
+                <option value="New">This procrastination is new</option>
+                <option value="Unsure">Not sure</option>
+                <option value="Other">Other</option>
+              </select>
             </div>
             <input className="form-control form-input btn btn-dark" type="submit" value="Submit" />
           </form>
