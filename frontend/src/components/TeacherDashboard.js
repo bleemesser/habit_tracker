@@ -151,7 +151,7 @@ class TeacherDashboard extends React.Component {
                         <input type="text" className="form-control teacher-form-input" placeholder='Name' onChange={this.onChangeTeacherName}/>
                         <input type="text" className="form-control teacher-form-input" placeholder='Email' onChange={this.onChangeTeacherEmail}/>
                         <input type="password" className="form-control teacher-form-input" placeholder='Password' onChange={this.onChangeTeacherPassword}/>
-                        <input type="submit" value="Submit" className="form-control teacher-form-input btn btn-light"/>
+                        <input type="submit" value="Submit" className="form-control teacher-form-input btn btn-dark"/>
                     </div>
                 </form>
             )
@@ -194,15 +194,15 @@ class TeacherDashboard extends React.Component {
                 <form onSubmit={this.editStudent}>
                     {/* <label>Student Name:</label> */}
                     <small id="namesmall" className="form-text text-muted">Name</small>
-                    <input aria-describedby="namesmall" className="form-control form-control-sm" type="text" name="name" placeholder={this.state.selectedStudent["name"]} onChange={this.onChangeName} />
+                    <input style={{minWidth:'fit-content'}} aria-describedby="namesmall" className="form-control form-control-sm" type="text" name="name" placeholder={this.state.selectedStudent["name"]} onChange={this.onChangeName} />
                     <small id="teachersmall" className="form-text text-muted">Teacher</small>
-                    <input aria-describedby="teachersmall" list="teachers" autoComplete='off' className="form-control form-control-sm" type="text" name="teacher" placeholder={this.state.selectedStudent["teacher"]} onChange={this.onChangeTeacher} />
+                    <input style={{minWidth:'fit-content'}} aria-describedby="teachersmall" list="teachers" autoComplete='off' className="form-control form-control-sm" type="text" name="teacher" placeholder={this.state.selectedStudent["teacher"]} onChange={this.onChangeTeacher} />
                     <datalist id="teachers">
                         {this.createDataList()}
                     </datalist>
                     <small id="blocksmall" className="form-text text-muted">Block</small>
-                    <input aria-describedby="blocksmall" className="form-control form-control-sm" type="number" min="1" max="8" name="blocknum" placeholder={this.state.selectedStudent["block"]} onChange={this.onChangeBlock} />
-                    <input className='form-control editform-submitbtn form-control-sm btn btn-sm btn-light' type="submit" value="Edit Student" />
+                    <input style={{minWidth:'fit-content'}} aria-describedby="blocksmall" className="form-control form-control-sm" type="number" min="1" max="8" name="blocknum" placeholder={this.state.selectedStudent["block"]} onChange={this.onChangeBlock} />
+                    <input className='form-control editform-submitbtn form-control-sm btn btn-sm btn-dark' type="submit" value="Edit Student" style={{minWidth:'fit-content'}} />
                 </form>
                 </div>
             )
@@ -391,8 +391,8 @@ class TeacherDashboard extends React.Component {
                     <td>{student["events"].length}</td>
                     <td>{student["teacher"]}</td>
                     <td>{student["blocknum"]}</td>
-                    <td><button className="btn btn-secondary" studentemail={student["email"]} onClick={this.selectStudent}>Edit</button>{this.checkIfStudentIsSame(student)}</td>
-                    <td><button className='btn btn-secondary' studentemail={student["email"]} onClick={this.deleteStudent}>Delete</button></td>
+                    <td><button className="btn btn-dark" studentemail={student["email"]} onClick={this.selectStudent}>Edit</button>{this.checkIfStudentIsSame(student)}</td>
+                    <td><button className='btn btn-dark' studentemail={student["email"]} onClick={this.deleteStudent}>Delete</button></td>
                 </tr>
             )
         }
@@ -403,7 +403,7 @@ class TeacherDashboard extends React.Component {
         return( 
             <div className="dashboard container">
                 <div className="teacher-create">
-                    <button className="btn btn-secondary" onClick={() => {
+                    <button className="btn btn-dark" onClick={() => {
                         
                         this.setState({creatingTeacher: !this.state.creatingTeacher})
                     }}>Create Teacher</button>
