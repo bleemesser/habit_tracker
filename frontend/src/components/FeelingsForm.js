@@ -73,22 +73,22 @@ class FeelingsForm extends React.Component {
             </h3>
             <div className="q">
               <label htmlFor="q1" >What were you feeling?</label><br/>
-              <input className="form-control form-input" type="text" question="1" onChange={this.handleChange} required placeholder="ie: really sad..."/>
+              <input className="form-control form-input" type="text" question="1" onChange={this.handleChange} required placeholder="ie: really sad... | stressed..."/>
             </div>
             <div className='q'>
-              <label htmlFor="q2">Why were you feeling that way?</label><br/>
-              <input tpye="text" className="form-control form-input" question="2" onChange={this.handleChange} required placeholder="ie: my friend and I are fighting..."/>
+              <label htmlFor="q2">Was there a direct cause? If so, what was it?</label><br/>
+              <input tpye="text" className="form-control form-input" question="2" onChange={this.handleChange} required placeholder="ie: my friend and I are fighting... | I'm having trouble writing an essay..."/>
             </div>
             <div className='q'>
-              <label htmlFor="q3">What caused that issue? — Try and follow a trail of causes</label><br/>
-              <input tpye="text" className="form-control form-input" question="3" onChange={this.handleChange} required placeholder="ie: I said something bad about them..."/>
+              <label htmlFor="q3">What led up to this event? — Try and follow a trail of causes</label><br/>
+              <input tpye="text" className="form-control form-input" question="3" onChange={this.handleChange} required placeholder="ie: I said something bad about them... | the due date is tomorrow so I can't meet with my teacher before then..."/>
             </div>
             <div className="q">
-              <label htmlFor="q4" >How are you going to resolve this emotional issue?</label><br/>
-              <input className="form-control form-input" type="text" question="4" onChange={this.handleChange} required placeholder="ie: talk to my friend..."/>
+              <label htmlFor="q4" >Write some steps that you think might help resolve your feelings</label><br/>
+              <input className="form-control form-input" type="text" question="4" onChange={this.handleChange} required placeholder="ie: talk to my friend... | ask for an extension..."/>
             </div>
             <div className="q">
-              <label htmlFor="qdate" >Date of Feelings</label><br/>
+              <label htmlFor="qdate" >When did this happen?</label><br/>
               <input className="form-control form-input" type="date" question="date" onChange={this.handleChange} required/>
             </div>
             <div className="q">

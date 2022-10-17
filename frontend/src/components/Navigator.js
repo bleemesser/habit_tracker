@@ -26,7 +26,7 @@ class Navigator extends React.Component {
             <nav className="navbar navbar-light navbar-expand-md py-3" style={{display:'flex',justifyContent:'center'}}>
                 {/* <div className="container"> */}
                 <div className='wrapper'>
-                    <a className="btn btn-light me-2 navstyle" role='button' href={this.state.href} >Dashboard</a>
+                    <a id='dashboardbtn' className="btn btn-light me-2 navstyle" role='button' href={this.state.href} >Dashboard</a>
                 </div>
                 <div className='wrapper'>
                     <a className="navbar-brand navstyle" href="/" style={{justifyContent:'center', fontSize:'20pt',display:'flex'}}>
@@ -34,7 +34,7 @@ class Navigator extends React.Component {
                     </a>
                 </div>
                 <div className='wrapper'>
-                    <a className="btn btn-light me-2 navstyle" role="button" href="/login">Log In</a>
+                    <a id='loginbtn' className="btn btn-light me-2 navstyle" role="button" href="/login">Log In</a>
 
                     {/* <button data-bs-toggle="collapse" className="navbar-toggler" data-bs-target="#navcol-4">
                         <span className="visually-hidden">Toggle navigation</span>

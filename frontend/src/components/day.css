@@ -1,10 +1,9 @@
 .calevent {
-    border: 1px solid none;
-    border-radius: 5px;
+    /* border: 1px solid none; */
+    /* border-radius: 5px; */
     padding: 5px;
     margin: 5px;
-    font-size: 12px;
-    height:min-content !important;
+    /* font-size: 12px; */
 }
 .no-margin {
     margin:0;

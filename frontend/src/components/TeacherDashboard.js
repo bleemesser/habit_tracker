@@ -50,7 +50,6 @@ class TeacherDashboard extends React.Component {
         this.selectStudent = this.selectStudent.bind(this);
         this.editStudent = this.editStudent.bind(this);
         this.deleteStudent = this.deleteStudent.bind(this);
-        this.tokenIsValid = this.tokenIsValid.bind(this);
         this.createTeacher = this.createTeacher.bind(this);
         this.onChangeTeacherName = this.onChangeTeacherName.bind(this);
         this.onChangeTeacherEmail = this.onChangeTeacherEmail.bind(this);
@@ -102,33 +101,6 @@ class TeacherDashboard extends React.Component {
             });
         }
     }
-    tokenIsValid = () => { // maybe unnecessary on this page, creating the student list in componentDidMount already checks for token validity
-            // it's not used either way, just for future use...
-            let token = window.sessionStorage.getItem("token");
-            if (token !== null && token !== '') {
-                axios({
-                        method: 'post',
-                        url: '/auth/token',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'token': token
-                        }
-                    })
-                    .then((res) => {
-                        if (res.data["status"] === "success") {
-
-                            return true;
-                        } else {
-
-                            return false;
-                        }
-                    })
-            } else {
-                // console.log("Token is invalid");
-                return false;
-            }
-
-    }
     createTeacher = (e) => {
             e.preventDefault();
             axios({
@@ -170,7 +142,7 @@ class TeacherDashboard extends React.Component {
         else {
             return <></>
         }
-    }
+    }   
     onChangeTeacherName = (e) => {
         this.setState({
             teacherToCreate: {
@@ -204,11 +176,9 @@ class TeacherDashboard extends React.Component {
                 <div className='container editmodal' id='editform'>
                 <button type="button" id='modalclosebtn' className='btn btn-close' onClick={this.hideModal}></button>
                 <form onSubmit={this.editStudent}>
-                    {/* <label>Student Name:</label> */}
                     <small id="namesmall" className="form-text text-muted">Name</small>
                     <input style={{minWidth:'fit-content'}} aria-describedby="namesmall" className="form-control form-control-sm" type="text" name="name" placeholder={this.state.selectedStudent["name"]} onChange={this.onChangeName} />
                     <small id="teachersmall" className="form-text text-muted">Teacher</small>
-                    {/* <input style={{minWidth:'fit-content'}} aria-describedby="teachersmall" list="teachers" autoComplete='off' className="form-control form-control-sm" type="text" name="teacher" placeholder={this.state.selectedStudent["teacher"]} onChange={this.onChangeTeacher} /> */}
                     <select className="form-control form-control-sm" name="teacher" defaultValue="" onChange={this.handleTeacherChange}>
                             <option value="" disabled>Select a teacher</option>
                             {this.createDataList()}
@@ -298,17 +268,6 @@ class TeacherDashboard extends React.Component {
     }
     editStudent = (e) => {
         e.preventDefault();
-        // let canContinue = false;
-        // for (let i = 0; i < this.state.teachers.length; i++) {
-        //     if (this.state.teachers[i]["name"] === this.state.selectedStudent["teacher"]) {
-        //         canContinue = true;
-        //     }
-        // }
-        // if (this.state.selectedStudent["teacher"] == "") {
-        //     canContinue = true;
-        // }
-        // if (canContinue === true) {
-            // alert("Student edited!");
         axios({
                 method: 'post',
                 url: '/teacher/edit-student',
@@ -335,9 +294,6 @@ class TeacherDashboard extends React.Component {
                 }
             })
     }
-        //     alert("Teacher does not exist!");
-        // }
-    
 
     onChangeBlock = (e) => {
         let student = this.state.selectedStudent;
@@ -428,7 +384,6 @@ class TeacherDashboard extends React.Component {
                     <td>{student["events"].length}</td>
                     <td>{student["teacher"]}</td>
                     <td>{student["blocknum"]}</td>
-                    {/* <td><button className="btn btn-dark" studentemail={student["email"]} onClick={this.selectStudent}>Edit</button>{this.checkIfStudentIsSame(student)}</td> */}
                     <td><button className="btn btn-dark" id='editbtn' studentemail={student["email"]} onClick={this.selectStudent}>Edit</button></td>
 
                     <td><button className='btn btn-dark' studentemail={student["email"]} onClick={this.deleteStudent}>Delete</button></td>

@@ -36,3 +36,11 @@
     display: flex;
     justify-content: center;
 }
+#loginbtn {
+    margin-right:5vw !important;
+    margin-left:auto !important;
+}
+#dashboardbtn {
+    margin-left:5vw !important;
+    margin-right:auto !important;
+}

@@ -14,7 +14,7 @@ function CalendarHeader() {
     }
     return (
         <header className="px-4 py-2 flex items-center">
-            <button className='border rounded py-2 px-4 mr-5' onClick={resetMonth}>Today</button>
+            <button className='rounded py-2 px-4 mr-5 btn btn-light' onClick={resetMonth}>Today</button>
             <button onClick={prevMonth}>
                 <span className='material-icons-outlined cursor-pointer text-gray-600 mx-2'>chevron_left</span>
             </button>

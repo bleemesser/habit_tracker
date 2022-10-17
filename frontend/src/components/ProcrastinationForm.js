@@ -25,6 +25,9 @@ class ProcrastinationForm extends React.Component {
         if (qnum === "4") {
           this.setState({q4:e.target.value})
         }
+        if (qnum === "5") {
+          this.setState({q5:e.target.value})
+        }
         if (qnum === "date") {
           this.setState({eventdate:e.target.value})
         }
@@ -84,8 +87,8 @@ class ProcrastinationForm extends React.Component {
                 <option value="English">English</option>
                 <option value="History">History</option>
                 <option value="Language">Foreign Language</option>
-                <option value="Art">Art/Music</option>
-                <option value="Shop">Ilab/Engineering</option>
+                <option value="Art/Music">Art/Music</option>
+                <option value="Ilab/Engineering">Ilab/Engineering</option>
                 <option value="Physics">Physics</option>
                 <option value="Extracurricular">Extracurricular</option>
                 <option value="Other">Other</option>
