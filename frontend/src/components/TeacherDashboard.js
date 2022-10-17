@@ -1,97 +1,108 @@
-import React, {
-    useEffect
-} from 'react';
+import React from 'react';
 import {
     Navigate
 } from 'react-router-dom';
 import axios from 'axios';
 import './TeacherDashboard.css';
-//Renders a table of student information for the teachers' use
+const Modal = ({ handleClose, show, children }) => {
+    const showHideClassName = show ? "modal display-block" : "modal display-none";
+  
+    return (
+      <div className={showHideClassName}  id='modalbg' onClick={handleClose}>
+        <div className="modal-main">
+          {children}
+        </div>
+      </div>
+    );
+  };
+
 class TeacherDashboard extends React.Component {
 
-        constructor(props) {
-            super(props);
-            this.state = {
-                Students: [],
-                loggedIn: true,
-                selectedStudent: {
-                    name: "",
-                    email: "",
-                    teacher: "",
-                    block: ""
-                },
-                studentToDelete: "",
-                teacherToCreate: {
-                    name: "",
-                    email: "",
-                    password: ""
-                },
-                openForm: "",
-                teachers: [],
-                sortType: "blocknum"
-            };
-            this.studentsList = this.studentsList.bind(this);
-            this.selectStudent = this.selectStudent.bind(this);
-            this.showForm = this.showForm.bind(this);
-            this.onChangeBlock = this.onChangeBlock.bind(this);
-            this.onChangeName = this.onChangeName.bind(this);
-            this.onChangeTeacher = this.onChangeTeacher.bind(this);
-            this.eventsList = this.eventsList.bind(this);
-            this.selectStudent = this.selectStudent.bind(this);
-            this.editStudent = this.editStudent.bind(this);
-            this.deleteStudent = this.deleteStudent.bind(this);
-            this.tokenIsValid = this.tokenIsValid.bind(this);
-            this.createTeacher = this.createTeacher.bind(this);
-            this.onChangeTeacherName = this.onChangeTeacherName.bind(this);
-            this.onChangeTeacherEmail = this.onChangeTeacherEmail.bind(this);
-            this.onChangeTeacherPassword = this.onChangeTeacherPassword.bind(this);
-            this.showTeacherForm = this.showTeacherForm.bind(this);
-            this.checkIfStudentIsSame = this.checkIfStudentIsSame.bind(this);
-            this.fetchTeachers = this.fetchTeachers.bind(this);
-            this.createDataList = this.createDataList.bind(this);
-            this.changeSortType = this.changeSortType.bind(this);
+    constructor(props) {
+        super(props);
+        this.state = {
+            Students: [],
+            loggedIn: true,
+            selectedStudent: {
+                name: "",
+                email: "",
+                teacher: "",
+                block: ""
+            },
+            showModal: false,
+            studentToDelete: "",
+            teacherToCreate: {
+                name: "",
+                email: "",
+                password: ""
+            },
+            openForm: "",
+            teachers: [],
+            sortType: "blocknum"
+        };
+        this.studentsList = this.studentsList.bind(this);
+        this.selectStudent = this.selectStudent.bind(this);
+        this.showForm = this.showForm.bind(this);
+        this.onChangeBlock = this.onChangeBlock.bind(this);
+        this.onChangeName = this.onChangeName.bind(this);
+        this.onChangeTeacher = this.onChangeTeacher.bind(this);
+        this.eventsList = this.eventsList.bind(this);
+        this.selectStudent = this.selectStudent.bind(this);
+        this.editStudent = this.editStudent.bind(this);
+        this.deleteStudent = this.deleteStudent.bind(this);
+        this.tokenIsValid = this.tokenIsValid.bind(this);
+        this.createTeacher = this.createTeacher.bind(this);
+        this.onChangeTeacherName = this.onChangeTeacherName.bind(this);
+        this.onChangeTeacherEmail = this.onChangeTeacherEmail.bind(this);
+        this.onChangeTeacherPassword = this.onChangeTeacherPassword.bind(this);
+        this.showTeacherForm = this.showTeacherForm.bind(this);
+        this.checkIfStudentIsSame = this.checkIfStudentIsSame.bind(this);
+        this.fetchTeachers = this.fetchTeachers.bind(this);
+        this.createDataList = this.createDataList.bind(this);
+        this.changeSortType = this.changeSortType.bind(this);
+        this.showModal = this.showModal.bind(this);
+        this.hideModal = this.hideModal.bind(this);
+    }
 
+    // Axios call to grab our student information under /teacher/dashboard, set it equal to Students
+    componentDidMount() {
+        if (window.sessionStorage.getItem('token') != null) {
+            axios({
+                    method: 'get',
+                    url: '/teacher/dashboard',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'token': window.sessionStorage.getItem('token'),
+                        'sort': this.state.sortType
+                    },
+                })
+                .then(response => {
+
+                    if (response.data.status === "autherror") {
+                        alert("Authentication error: session has expired or is invalid. Please log in again.");
+                        this.setState({
+                            loggedIn: false
+                        });
+                    }
+                    if (response.data.status === "success") {
+                        this.fetchTeachers();
+                        let data = JSON.parse(JSON.parse(JSON.stringify(response.data))["data"]) // takes the string, converts it to json, selects the "data" string of an array, converts it to an array object
+                        this.setState({
+                            Students: data
+                        });
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+        } else {
+            alert("You are not logged in!");
+            this.setState({
+                loggedIn: false
+            });
         }
-
-        // Axios call to grab our student information under /teacher/dashboard, set it equal to Students
-        componentDidMount() {
-            if (window.sessionStorage.getItem('token') != null) {
-                axios({
-                        method: 'get',
-                        url: '/teacher/dashboard',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'token': window.sessionStorage.getItem('token'),
-                            'sort': this.state.sortType
-                        },
-                    })
-                    .then(response => {
-
-                        if (response.data.status === "autherror") {
-                            alert("Authentication error: session has expired or is invalid. Please log in again.");
-                            this.setState({
-                                loggedIn: false
-                            });
-                        }
-                        if (response.data.status === "success") {
-                            this.fetchTeachers();
-                            let data = JSON.parse(JSON.parse(JSON.stringify(response.data))["data"]) // takes the string, converts it to json, selects the "data" string of an array, converts it to an array object
-                            this.setState({
-                                Students: data
-                            });
-                        }
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    })
-            } else {
-                alert("You are not logged in!");
-                this.setState({
-                    loggedIn: false
-                });
-            }
-        }
-        tokenIsValid = () => { // maybe unnecessary on this page, creating the student list in componentDidMount already checks for token validity
+    }
+    tokenIsValid = () => { // maybe unnecessary on this page, creating the student list in componentDidMount already checks for token validity
             // it's not used either way, just for future use...
             let token = window.sessionStorage.getItem("token");
             if (token !== null && token !== '') {
@@ -117,8 +128,8 @@ class TeacherDashboard extends React.Component {
                 return false;
             }
 
-        }
-        createTeacher = (e) => {
+    }
+    createTeacher = (e) => {
             e.preventDefault();
             axios({
                     method: 'post',
@@ -142,12 +153,12 @@ class TeacherDashboard extends React.Component {
                         alert("Teacher created successfully!");
                     }
                 })
-        }
+    }
     showTeacherForm = () => {
         if (this.state.creatingTeacher === true) {
             return (
                 <form onSubmit={this.createTeacher}>
-                    <div className="form-group">
+                    <div className="form-group container">
                         <input type="text" className="form-control teacher-form-input" placeholder='Name' onChange={this.onChangeTeacherName}/>
                         <input type="text" className="form-control teacher-form-input" placeholder='Email' onChange={this.onChangeTeacherEmail}/>
                         <input type="password" className="form-control teacher-form-input" placeholder='Password' onChange={this.onChangeTeacherPassword}/>
@@ -190,19 +201,22 @@ class TeacherDashboard extends React.Component {
     showForm = () => {
         if (this.state.selectedStudent["email"] !== "") { // eventually this form should be rendered on top of the table, as sort of a popup, and disappear when the user clicks outside of it or submits it
             return (
-                <div className='container'>
+                <div className='container editmodal' id='editform'>
+                <button type="button" id='modalclosebtn' className='btn btn-close' onClick={this.hideModal}></button>
                 <form onSubmit={this.editStudent}>
                     {/* <label>Student Name:</label> */}
                     <small id="namesmall" className="form-text text-muted">Name</small>
                     <input style={{minWidth:'fit-content'}} aria-describedby="namesmall" className="form-control form-control-sm" type="text" name="name" placeholder={this.state.selectedStudent["name"]} onChange={this.onChangeName} />
                     <small id="teachersmall" className="form-text text-muted">Teacher</small>
-                    <input style={{minWidth:'fit-content'}} aria-describedby="teachersmall" list="teachers" autoComplete='off' className="form-control form-control-sm" type="text" name="teacher" placeholder={this.state.selectedStudent["teacher"]} onChange={this.onChangeTeacher} />
-                    <datalist id="teachers">
-                        {this.createDataList()}
-                    </datalist>
+                    {/* <input style={{minWidth:'fit-content'}} aria-describedby="teachersmall" list="teachers" autoComplete='off' className="form-control form-control-sm" type="text" name="teacher" placeholder={this.state.selectedStudent["teacher"]} onChange={this.onChangeTeacher} /> */}
+                    <select className="form-control form-control-sm" name="teacher" defaultValue="" onChange={this.handleTeacherChange}>
+                            <option value="" disabled>Select a teacher</option>
+                            {this.createDataList()}
+                    </select>
                     <small id="blocksmall" className="form-text text-muted">Block</small>
                     <input style={{minWidth:'fit-content'}} aria-describedby="blocksmall" className="form-control form-control-sm" type="number" min="1" max="8" name="blocknum" placeholder={this.state.selectedStudent["block"]} onChange={this.onChangeBlock} />
                     <input className='form-control editform-submitbtn form-control-sm btn btn-sm btn-dark' type="submit" value="Edit Student" style={{minWidth:'fit-content'}} />
+
                 </form>
                 </div>
             )
@@ -215,44 +229,54 @@ class TeacherDashboard extends React.Component {
 
     selectStudent = (e) => { // DONT CHANGE THIS it was very annoying to set up so that the edit ui would work as a user would intuitively expect:
         // the user clicks on a student, the edit ui pops up, the user clicks on another student, the edit ui updates to the new student, the user clicks on the same student again, the edit ui disappears
-        if (e.target.getAttribute('studentemail') !== this.state.selectedStudent["email"] && e.target.getAttribute('studentemail') !== this.state.openForm) {
-            this.setState({
-                openForm: e.target.getAttribute('studentemail')
-            });
-            let email = e.target.getAttribute('studentemail');
-            let student = this.state.Students.filter(student => student["email"] === email);
-            student = student[0];
-            this.setState({
-                selectedStudent: {
-                    email: student["email"],
-                    name: student["name"],
-                    teacher: student["teacher"],
-                    block: student["blocknum"]
-                }
-            })
-        } else if (this.state.selectedStudent["email"] !== this.state.openForm) {
-            let email = e.target.getAttribute('studentemail');
-            let student = this.state.Students.filter(student => student["email"] === email);
-            student = student[0];
-            this.setState({
-                selectedStudent: {
-                    email: student["email"],
-                    name: student["name"],
-                    teacher: student["teacher"],
-                    block: student["blocknum"]
-                }
-            })
-        } else {
-            this.setState({
-                selectedStudent: {
-                    email: "",
-                    name: "",
-                    teacher: "",
-                    block: ""
-                }
-            })
-        }
-
+        // if (e.target.getAttribute('studentemail') !== this.state.selectedStudent["email"] && e.target.getAttribute('studentemail') !== this.state.openForm) {
+        //     this.setState({
+        //         openForm: e.target.getAttribute('studentemail')
+        //     });
+            // let email = e.target.getAttribute('studentemail');
+            // let student = this.state.Students.filter(student => student["email"] === email);
+            // student = student[0];
+        //     this.setState({
+        //         selectedStudent: {
+        //             email: student["email"],
+        //             name: student["name"],
+        //             teacher: student["teacher"],
+        //             block: student["blocknum"]
+        //         }
+        //     })
+        // } else if (this.state.selectedStudent["email"] !== this.state.openForm) {
+        //     let email = e.target.getAttribute('studentemail');
+        //     let student = this.state.Students.filter(student => student["email"] === email);
+        //     student = student[0];
+        //     this.setState({
+        //         selectedStudent: {
+        //             email: student["email"],
+        //             name: student["name"],
+        //             teacher: student["teacher"],
+        //             block: student["blocknum"]
+        //         }
+        //     })
+        // } else {
+        //     this.setState({
+        //         selectedStudent: {
+        //             email: "",
+        //             name: "",
+        //             teacher: "",
+        //             block: ""
+        //         }
+        //     })
+        // }
+        let email = e.target.getAttribute('studentemail');
+        let student = this.state.Students.filter(student => student["email"] === email);
+        student = student[0];
+        this.setState({
+            selectedStudent: {
+                email: student["email"],
+                name: student["name"],
+                teacher: student["teacher"],
+                block: student["blocknum"]
+            }
+        }, this.showModal)
     }
 
     deleteStudent = (e) => {
@@ -274,42 +298,46 @@ class TeacherDashboard extends React.Component {
     }
     editStudent = (e) => {
         e.preventDefault();
-        let canContinue = false;
-        for (let i = 0; i < this.state.teachers.length; i++) {
-            if (this.state.teachers[i]["name"] === this.state.selectedStudent["teacher"]) {
-                canContinue = true;
-            }
-        }
-        if (canContinue === true) {
+        // let canContinue = false;
+        // for (let i = 0; i < this.state.teachers.length; i++) {
+        //     if (this.state.teachers[i]["name"] === this.state.selectedStudent["teacher"]) {
+        //         canContinue = true;
+        //     }
+        // }
+        // if (this.state.selectedStudent["teacher"] == "") {
+        //     canContinue = true;
+        // }
+        // if (canContinue === true) {
             // alert("Student edited!");
-            axios({
-                    method: 'post',
-                    url: '/teacher/edit-student',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        "token": window.sessionStorage.getItem("token")
-                    },
-                    data: {
-                        "email": this.state.selectedStudent["email"],
-                        "name": this.state.selectedStudent["name"],
-                        "teacher": this.state.selectedStudent["teacher"],
-                        "blocknum": this.state.selectedStudent["blocknum"]
-                    }
-                })
-                .then((res) => {
-                    // while the request itself will return code 200 (success), the backend will return a custom status in res.data.status which is what
-                    // should be checked to see if the request was successful
-                    if (res.data.status === "success") {
-                        this.componentDidMount();
-                        // need to redirect to login page
-                    } else {
-                        alert(res.data.message);
-                    }
-                })
-        } else {
-            alert("Teacher does not exist!");
-        }
+        axios({
+                method: 'post',
+                url: '/teacher/edit-student',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "token": window.sessionStorage.getItem("token")
+                },
+                data: {
+                    "email": this.state.selectedStudent["email"],
+                    "name": this.state.selectedStudent["name"],
+                    "teacher": this.state.selectedStudent["teacher"],
+                    "blocknum": this.state.selectedStudent["blocknum"]
+                }
+            })
+            .then((res) => {
+                // while the request itself will return code 200 (success), the backend will return a custom status in res.data.status which is what
+                // should be checked to see if the request was successful
+                if (res.data.status === "success") {
+                    this.componentDidMount();
+                    this.setState({showModal:false});
+                    // need to redirect to login page
+                } else {
+                    alert(res.data.message);
+                }
+            })
     }
+        //     alert("Teacher does not exist!");
+        // }
+    
 
     onChangeBlock = (e) => {
         let student = this.state.selectedStudent;
@@ -357,7 +385,7 @@ class TeacherDashboard extends React.Component {
         let teachers = this.state.teachers;
         let out = [];
         for (let i = 0; i < teachers.length; i++) {
-            out.push(<option key={i} value={teachers[i]["name"]}></option>)
+            out.push(<option key={i} value={teachers[i]["name"]}>{teachers[i]["name"]}</option>)
         }
         return out;
     }
@@ -374,6 +402,15 @@ class TeacherDashboard extends React.Component {
             return this.showForm();
         }
     }
+    showModal = () => {
+        this.setState({ showModal: true });
+      };
+    
+    hideModal = (e) => {
+        if (e.target.id === 'modalbg' || e.target.id === 'modalclosebtn') {
+            this.setState({ showModal: false });
+        }
+    };
     studentsList = () => {
         if (this.state.loggedIn === false) {
             return <Navigate to='/login' />
@@ -391,7 +428,9 @@ class TeacherDashboard extends React.Component {
                     <td>{student["events"].length}</td>
                     <td>{student["teacher"]}</td>
                     <td>{student["blocknum"]}</td>
-                    <td><button className="btn btn-dark" studentemail={student["email"]} onClick={this.selectStudent}>Edit</button>{this.checkIfStudentIsSame(student)}</td>
+                    {/* <td><button className="btn btn-dark" studentemail={student["email"]} onClick={this.selectStudent}>Edit</button>{this.checkIfStudentIsSame(student)}</td> */}
+                    <td><button className="btn btn-dark" id='editbtn' studentemail={student["email"]} onClick={this.selectStudent}>Edit</button></td>
+
                     <td><button className='btn btn-dark' studentemail={student["email"]} onClick={this.deleteStudent}>Delete</button></td>
                 </tr>
             )
@@ -410,11 +449,11 @@ class TeacherDashboard extends React.Component {
                     {this.showTeacherForm()}
                 </div>
                 <div className='table-responsive' style={{maxWidth:'120%'}}>
-                <table className='table table-responsive' >
+                <table className='table table-responsive table-borderless' id='teachertable'>
                     <thead>
                         <tr>
-                            <th className="sortbtn" sort="name" onClick={this.changeSortType}>Student Name</th>
-                            <th>Student Email</th>
+                            <th className="sortbtn" sort="name" onClick={this.changeSortType}>Name</th>
+                            <th>Email</th>
                             <th>Latest Log</th>
                             <th>Latest Log Type</th>
                             <th>Total Logs</th>
@@ -426,6 +465,9 @@ class TeacherDashboard extends React.Component {
                         { this.studentsList() }
                     </tbody>
                 </table>
+                <Modal show={this.state.showModal} handleClose={this.hideModal}>
+                    {this.showForm()}
+                </Modal>
                 </div>
                 <div id='editform'>
                 </div>

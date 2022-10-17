@@ -1,0 +1,11 @@
+.calevent {
+    border: 1px solid none;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    font-size: 12px;
+    height:min-content !important;
+}
+.no-margin {
+    margin:0;
+}

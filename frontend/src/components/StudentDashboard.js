@@ -1,77 +1,49 @@
-// set up react class component
-import React from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import axios from 'axios';
-import { json } from 'react-router-dom';
+import { getMonth } from './calutil';
+import Month from './Month';
+import CalendarHeader from './CalendarHeader';
+import Sidebar from './Sidebar';
+import GlobalContext from './calendarContext/GlobalContext';
 
-class StudentDashboard extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {data:[]};
-        this.fetchData = this.fetchData.bind(this);
-        this.renderData = this.renderData.bind(this);
+function StudentDashboard() {
+    const [currentMonth, setCurrentMonth] = useState(getMonth());
+    const {monthIndex} = useContext(GlobalContext);
+    const [events, setEvents] = useState([]);
+    useEffect(() => {
+        setCurrentMonth(getMonth(monthIndex));
+    }, [monthIndex]);
 
-    }
-    // when component is mounted, fetch data
-    componentDidMount() {
-        this.fetchData();
-    }
-    // fetch data from backend
-    fetchData = () => {
-        axios({
-            method: 'get',
-            url: '/student/dashboard',
-            headers: {
-                'Content-Type': 'application/json',
-                'token':window.sessionStorage.getItem('token')
+    useEffect(() => {
+        async function fetchEvents() {
+            const response = await axios({
+                method: 'get',
+                url: '/student/dashboard',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'token':window.sessionStorage.getItem('token')
+                }
+            })
+            if (response.data["status"] === "success") {
+                setEvents(JSON.parse(response.data.data)["events"]);
             }
-        })
-        .then((response) => {
-            // console.log(response);
-            if (response.data.status === "success") {
-                // convert data to array using json parse
-                // console.log(JSON.parse(response.data.data)["events"]);
-                this.setState({data: JSON.parse(response.data.data)["events"]}, () => {console.log(this.state)});
-        }})
-        .catch((error) => {
-            console.log(error);
-        });
-    }
-    // render data
-    renderData = () => {
-    //     let elements = [];
-    //     for (let i = 0; i < this.state.data.length; i++) {
-    //         Object.entries(this.state.data[i]).forEach(([key, value]) => {
-    //             elements.push(<p key={i}>{value}</p>)
-    //         });
-            
-    //     }
-    //     return elements;
-
-    // }
-    return this.state.data.map((item, index) => {
-        console.log(item)
-        return (
-            <div key={index}>
-
-                <p>{item.event_date}</p>
-                <p>{item.date_submitted}</p>
-                <p>{item.type}</p>
-                <p>{item.data.q1}</p>
-                <p>{item.data.q2}</p>
-                <p>{item.data.q3}</p>
-                <p>{item.data.q4}</p>
-                <p>{item.data.q5}</p>
+            else {
+                console.log(response.data["message"]);
+            }
+        }
+        fetchEvents();
+    },[]);
+    
+    return (
+        <React.Fragment>
+            <CalendarHeader/>
+            <div className='h-[calc(100vh-140px)] flex flex-columns'>
+                <div className='flex flex-1'>
+                    <Sidebar events={events}/>
+                    <Month month={currentMonth} events={events}/>
+                </div>
             </div>
-        )
-    })
-}
-    // render component
-    render() {
-        return (
-            <div>
-                {this.renderData()}
-            </div>
-        )
-    }
+        </React.Fragment>
+    )
 }
 export default StudentDashboard;

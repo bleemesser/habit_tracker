@@ -70,15 +70,23 @@ class LoginPage extends React.Component {
     handleSignup = (e) => {
         e.preventDefault();
         let canContinue = "";
-        if (this.state.email === "" || this.state.password === "" || this.state.name === "" || this.state.teacher === "" || this.state.block === "") {
-            canContinue = "incomplete";
-        }
-        for (let i = 0; i < this.state.teachers.length; i++) {
-            if (this.state.teachers[i].name === this.state.teacher) {
+        // if (this.state.email === "" || this.state.password === "" || this.state.name === "" || this.state.teacher === "" || this.state.block === "") {
+        //     canContinue = "incomplete";
+        // }
+        // for (let i = 0; i < this.state.teachers.length; i++) {
+        //     if (this.state.teachers[i].name === this.state.teacher) {
+        //         canContinue = "complete";
+        //     }
+        // }
+        let domain = "nuevaschool.org"
+        var parts = this.state.email.split('@');
+        if (parts.length === 2) {
+            if (parts[1] === domain) {
                 canContinue = "complete";
+            } else {
+                canContinue = "emailfailed";
             }
         }
-
         if (canContinue === "complete") {
             axios({
                 method: 'post',
@@ -97,14 +105,15 @@ class LoginPage extends React.Component {
             .then((res) => {
                 if (res.data.status === "success") {
                     alert("Account created successfully!");
+                    window.location.reload();
                 }
                 else {
                     alert("Error: " + res.data.message);
                 }
             })
         }
-        else if (canContinue === "incomplete") {
-            alert("Please fill out all fields");
+        else if (canContinue === "emailfailed") {
+            alert("Email must be a Nueva email address.");
         }
         else if (canContinue === "") {
             alert("Invalid teacher name. Please use one of the names in the dropdown.");
@@ -152,11 +161,10 @@ class LoginPage extends React.Component {
                         <input className="form-control form-input" type="text" placeholder='Email' name='email' required onChange={this.handleEmailChange}/>
                         <input className="form-control form-input" type="password" placeholder='Password' name='password' required onChange={this.handlePasswordChange}/>
                         {/* creating a dropdown with all the teachers */}
-
-                        <input className="form-control form-input" list="teachers" autoComplete='off' type="text" placeholder='Teacher' name='teacher' required onChange={this.handleTeacherChange}/>
-                        <datalist id="teachers">
+                        <select className="form-control form-input" name="teacher" defaultValue="" onChange={this.handleTeacherChange}>
+                            <option value="" disabled selected>Select a teacher</option>
                             {this.renderTeachers()}
-                        </datalist>
+                        </select>
                         <input className="form-control form-input" type="number" min={1} max={8} placeholder='Block' name='block' required onChange={this.handleBlockChange}/>
                         <input className="form-control form-input btn submitbtn btn-dark" type="submit" onClick={this.handleSignup} value="Sign Up"/>
                     </form>

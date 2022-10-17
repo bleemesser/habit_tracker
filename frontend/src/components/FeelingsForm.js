@@ -38,7 +38,7 @@ class FeelingsForm extends React.Component {
       e.preventDefault();
       axios({
         method: 'post',
-        url: '/submit/sleep',
+        url: '/submit/feelings',
         headers: {
           'Content-Type': 'application/json',
           'token':window.sessionStorage.getItem('token')

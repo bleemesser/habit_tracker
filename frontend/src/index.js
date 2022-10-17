@@ -1,6 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { Link } from 'react-router-dom';
+// import ReactDOM from 'react-dom/client';
+// import { Link } from 'react-router-dom';
 import './index.css';
 import LoginPage from './LoginPage';
 import StudentDashboard from './components/StudentDashboard';
@@ -19,11 +19,13 @@ import TeacherDashboard from "./components/TeacherDashboard.js"
 import ProcrastinationForm from './components/ProcrastinationForm';
 import SleepForm from './components/SleepForm';
 import FeelingsForm from './components/FeelingsForm';
+import ContextWrapper from './components/calendarContext/ContextWrapper';
 
 
 const container = document.getElementById('root');
 const root = createRoot(container);
 root.render(
+  <ContextWrapper>
   <BrowserRouter>
     <Routes>
       <Route path="/" element= {<LayoutsWithNavbar />}>
@@ -40,6 +42,7 @@ root.render(
         } />
     </Routes>
   </BrowserRouter>
+  </ContextWrapper>
 );
 
 function LayoutsWithNavbar() {
