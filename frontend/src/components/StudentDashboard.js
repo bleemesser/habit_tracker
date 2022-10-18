@@ -43,6 +43,7 @@ function StudentDashboard() {
                 }
             })
             if (response.data["status"] === "success") {
+                // console.log(response.data["data"])
                 setEvents(JSON.parse(response.data.data)["events"]);
             }
             else if (response.data["status"] === "autherror") {
@@ -60,14 +61,14 @@ function StudentDashboard() {
     }
     }
     function getShowState(v,id) {
-        console.log(v,id);
+        // console.log(v,id);
         setShow(v);
         setEventId(parseInt(id));
 
     }
 
     function renderEvent() {
-        console.log(events,eventId)
+        // console.log(events,eventId)
         // iterate through all events and if the id matches the eventId, return the event
         for (let i = 0; i < events.length; i++) {
             if (events[i].id === eventId) {
@@ -85,20 +86,27 @@ function StudentDashboard() {
                                         <th>Event Date</th>
                                         <td>{event.event_date}</td>
                                     </tr>
+                                    <tr>
                                     <th>What was procrastinated on?</th>
                                     <td>{event.data["q1"]}</td>
+                                    </tr>
                                     <tr>
                                         <th>What subject was it for?</th>
                                         <td>{event.data["q2"]}</td>
                                     </tr>
+                                    <tr>
                                     <th>What was the distraction?</th>
                                     <td>{event.data["q3"]}</td>
+                                    </tr>
                                     <tr>
                                         <th>What caused the distraction?</th>
                                         <td>{event.data["q4"]}</td>
                                     </tr>
-                                    <th>What are some future steps?</th>
-                                    <td>{event.data["q5"]}</td>
+                                    <tr>
+                                        <th>What are some future steps?</th>
+                                        <td>{event.data["q5"]}</td>
+                                    </tr>
+                                    
                                     <tr>
                                         <th>Is it a recurring problem?</th>
                                         <td>{event.data["q6"]}</td>
@@ -137,8 +145,10 @@ function StudentDashboard() {
                                         <th>What are some future steps?</th>
                                         <td>{event.data["q4"]}</td>
                                     </tr>
+                                    <tr>
                                     <th>Is it a recurring problem?</th>
                                     <td>{event.data["q5"]}</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>

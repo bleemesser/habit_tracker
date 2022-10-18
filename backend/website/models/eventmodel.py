@@ -31,6 +31,12 @@ class Event(db.Model):
             data["date_submitted"] = data["date_submitted"].strftime("%m-%d-%Y")
         if isinstance(data["event_date"], datetime):
             data["event_date"] = data["event_date"].strftime("%m-%d-%Y")
+        # remove apostrophes from any values
+        for key, value in data.items():
+            if isinstance(value, dict):
+                for k, v in value.items():
+                    if isinstance(v, str):
+                        value[k] = v.replace("'", "*")
 
         desired_data = ["id", "type", "date_submitted", "event_date", "owner", "data"]
         return str({key: data[key] for key in desired_data})
