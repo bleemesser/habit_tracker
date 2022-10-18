@@ -44,7 +44,15 @@ function StudentDashboard() {
             })
             if (response.data["status"] === "success") {
                 // console.log(response.data["data"])
-                setEvents(JSON.parse(response.data.data)["events"]);
+                let events = JSON.parse(response.data.data)["events"]
+                for (let i = 0; i < events.length; i++) {
+                    // for loop through events[i] dictionary
+                    for (let key in events[i]["data"]) {
+                        events[i]['data'][key] = events[i]['data'][key].replace("&#39;","'").replace("&#34;",'"')
+                    }
+
+                }
+                setEvents(events);
             }
             else if (response.data["status"] === "autherror") {
                 window.location.href = "/login";

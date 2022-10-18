@@ -3,7 +3,7 @@
     "port":"5000",
     "host":"0.0.0.0",
     "create_master":0,
-    "change_master_password":0,
-    "master_password":""
+    "change_master_password":1,
+    "master_password":"master"
 
 }

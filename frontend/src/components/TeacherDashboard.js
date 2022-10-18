@@ -86,6 +86,17 @@ class TeacherDashboard extends React.Component {
                     if (response.data.status === "success") {
                         this.fetchTeachers();
                         let data = JSON.parse(JSON.parse(JSON.stringify(response.data))["data"]) // takes the string, converts it to json, selects the "data" string of an array, converts it to an array object
+                        for (let i = 0; i < data.length; i++) { // replaces the &#39; with ' for the question responses
+                            let events = data[i]["events"];   
+                            for (let j = 0; j < events.length; j++) {
+                                let questions = events[j]["data"];
+                                for (let key in questions) {
+                                    events[j]["data"][key] = events[j]["data"][key].replace("&#39;","'").replace("&#34;",'"');
+                                }
+                            }
+                        }
+                        // console.log(data)
+
                         this.setState({
                             Students: data
                         });

@@ -40,6 +40,8 @@ def delete_student(current_user):
     # print(user)
     db.session.execute(db.delete(User).where(User.email == data["email"]))
     db.session.commit()
+    db.session.execute(db.delete(Event).where(Event.owner == user.id))
+    db.session.commit()
     return {
         "status": "success",
         "message": "Student deleted successfully",

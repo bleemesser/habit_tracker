@@ -46,8 +46,8 @@ def download(current_user):
         event_dict = json.loads(str(event).replace("'", '"'))
         for q in event_dict["data"]:
             event_dict[q] = event_dict["data"][q]
-        del event_dict["data"]
-        del event_dict["owner"]
+        del event_dict["data"] # we've already copied the data into the main dict, so we don't need it anymore
+        del event_dict["owner"] # we don't need the owner id 
         for key, value in event_dict.items():
             event_dict[key] = [value]
         df_e = pd.DataFrame(event_dict)  # convert the event into a dataframe
@@ -58,7 +58,7 @@ def download(current_user):
         buffer.write(df.to_csv())
         # forming a Response object with Headers to return from flask 
         response = make_response(buffer.getvalue())
-        response.headers['Content-Disposition'] = 'attachment; filename=namaste.csv'
+        response.headers['Content-Disposition'] = 'attachment; filename=data.csv'
         response.mimetype = 'text/csv'
         # return the Response object
         return response

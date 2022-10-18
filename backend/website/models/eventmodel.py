@@ -36,7 +36,7 @@ class Event(db.Model):
             if isinstance(value, dict):
                 for k, v in value.items():
                     if isinstance(v, str):
-                        value[k] = v.replace("'", "*")
+                        value[k] = v.replace("'", "&#39;").replace('"', "&#34;")
 
         desired_data = ["id", "type", "date_submitted", "event_date", "owner", "data"]
         return str({key: data[key] for key in desired_data})

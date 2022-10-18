@@ -19,7 +19,9 @@ def create_master(app):
             )
             db.session.add(master)
             db.session.commit()
-
+            return True
+        else:
+            return False
 def change_master_password(app):
     with app.app_context():
         db.session.execute(
