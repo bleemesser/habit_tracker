@@ -1,8 +1,7 @@
-from flask import Blueprint, render_template, request, redirect, session, jsonify
-from .extensions import db, bcrypt, key
+from flask import Blueprint, request
+from .extensions import db
 from .models.usermodel import User
 from .models.eventmodel import Event
-from functools import wraps
 import datetime
 from .auth import token_required
 

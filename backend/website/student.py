@@ -1,18 +1,9 @@
 from flask import (
     Blueprint,
-    render_template,
-    request,
-    redirect,
-    session,
-    jsonify,
-    send_file,
-    make_response
+    make_response,
 )
-from io import StringIO, BytesIO
-from .extensions import db, bcrypt, key
+from io import StringIO
 from .models.usermodel import User
-from .models.eventmodel import Event
-import datetime
 import json
 from .auth import token_required
 import pandas as pd
@@ -46,20 +37,23 @@ def download(current_user):
         event_dict = json.loads(str(event).replace("'", '"'))
         for q in event_dict["data"]:
             event_dict[q] = event_dict["data"][q]
-        del event_dict["data"] # we've already copied the data into the main dict, so we don't need it anymore
-        del event_dict["owner"] # we don't need the owner id 
+        del event_dict["data"]
+        # we've already copied the data into the main dict, so we don't need it anymore
+        del event_dict["owner"]
+        # we don't need the owner id
         for key, value in event_dict.items():
             event_dict[key] = [value]
-        df_e = pd.DataFrame(event_dict)  # convert the event into a dataframe
-        df = pd.concat([df, df_e], ignore_index=True)  # append the event to the dataframe using concat
+        df_e = pd.DataFrame(event_dict)
+        # convert the event into a dataframe
+        df = pd.concat([df, df_e], ignore_index=True)
+        # append the event to the dataframe using concat
     with StringIO() as buffer:
-        # forming a StringIO object  
+        # forming a StringIO object
         buffer = StringIO()
         buffer.write(df.to_csv())
-        # forming a Response object with Headers to return from flask 
+        # forming a Response object with Headers to return from flask
         response = make_response(buffer.getvalue())
-        response.headers['Content-Disposition'] = 'attachment; filename=data.csv'
-        response.mimetype = 'text/csv'
+        response.headers["Content-Disposition"] = "attachment; filename=data.csv"
+        response.mimetype = "text/csv"
         # return the Response object
         return response
-
