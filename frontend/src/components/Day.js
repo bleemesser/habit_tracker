@@ -1,10 +1,9 @@
-import React, {useState, useContext} from 'react'
+import React from 'react'
 import dayjs from 'dayjs';
 import './day.css';
 
 
 function Day({day, rowIndex, events, pushShowState}) {
-    const [show, setShow] = useState(false);
 
     function getCurrentDayClass() {
         return day.format("DD-MM-YY") === dayjs().format("DD-MM-YY") ? 'bg-blue-600 text-white rounded-full w-7' : '';
@@ -24,9 +23,6 @@ function Day({day, rowIndex, events, pushShowState}) {
         let id = e.target.id;
         pushShowState(true, id);
 
-    }
-    function hideModal() {
-        pushShowState(false)
     }
     function unpackEvents() {
         let unpackedEvents = [];
