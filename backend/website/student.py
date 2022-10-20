@@ -33,7 +33,10 @@ def download(current_user):
     events = User.query.filter_by(email=current_user.email).first().events
     # print(events)
     df = pd.DataFrame({})  # create an empty dataframe
+    # print("EVENT", events)
     for event in events:
+        # print(event)
+        # print(str(event).replace("'", '"'))
         event_dict = json.loads(str(event).replace("'", '"'))
         for q in event_dict["data"]:
             event_dict[q] = event_dict["data"][q]
