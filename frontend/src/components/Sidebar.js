@@ -1,6 +1,7 @@
 import React from 'react'
 import './sidebar.css'
 import axios from 'axios'
+//the sidebar is a component used in the student dashboard, displaying a sort of overview
 class Sidebar extends React.Component { // simple sidebar to display the most basic stats, could/should be expanded to include more in-depth analysis
     constructor(props) {
         super(props);
@@ -10,6 +11,7 @@ class Sidebar extends React.Component { // simple sidebar to display the most ba
     componentDidMount() {
         this.unpackEvents();
     }
+    //tracking number of each form submitted by this student as well as the total
     unpackEvents() {
         let pcount = 0;
         let scount = 0;
@@ -58,6 +60,7 @@ class Sidebar extends React.Component { // simple sidebar to display the most ba
             </table>
         );
     }
+    //allow the student to download a csv of their form history
     exportEvents() {
         axios({
             url: '/student/download',

@@ -21,7 +21,6 @@ import SleepForm from './components/SleepForm';
 import FeelingsForm from './components/FeelingsForm';
 import ContextWrapper from './components/calendarContext/ContextWrapper';
 
-
 const container = document.getElementById('root');
 const root = createRoot(container);
 root.render(

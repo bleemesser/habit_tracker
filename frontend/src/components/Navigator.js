@@ -1,7 +1,9 @@
 import './NavBar.css';
 import React from "react";
 
+//navbar!
 class Navigator extends React.Component {
+    //determines whether the user is a student or a teacher, updaing the destination of the "dashboard" button to be correct
     constructor(props) {
         super(props);
         this.state = {role:window.sessionStorage.getItem("roles"),href:""};
@@ -19,8 +21,6 @@ class Navigator extends React.Component {
     }
 
     render() {
-        
-    
         return (
 
             <nav className="navbar navbar-light navbar-expand-md py-3" style={{display:'flex',justifyContent:'center'}}>

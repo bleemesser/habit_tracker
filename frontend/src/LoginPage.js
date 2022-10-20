@@ -1,6 +1,8 @@
 import React from 'react'
 import axios from 'axios';
 import './LoginPage.css'
+
+//Auth page with login and signup. We have added inputs for students' teachers and block #
 class LoginPage extends React.Component {
     constructor(props) {
         super(props);
@@ -37,6 +39,7 @@ class LoginPage extends React.Component {
 
     handleLogin = (e) => {
         e.preventDefault();
+        //logs out of current account (if there is one) so it can be replaced with new login
         window.sessionStorage.clear();
         axios({
             method: 'post',
@@ -44,6 +47,7 @@ class LoginPage extends React.Component {
             headers: {
                 'Content-Type': 'application/json', // must be specified to work with the backend
             },
+            //these are our two login values, user email and password
             data: {
                 "email": this.state.email,
                 "password": this.state.password
@@ -52,14 +56,14 @@ class LoginPage extends React.Component {
         .then((res) => {
             console.log(res);
             if (res.data.status === "success") {
-                window.sessionStorage.setItem("token", res.data.token);
-                window.sessionStorage.setItem("roles", res.data.roles);
+                window.sessionStorage.setItem("token", res.data.token); //set token in session storage
+                window.sessionStorage.setItem("roles", res.data.roles); //set user roles in session storage
                 // this.setState({loggedIn: true}); 
                 if (res.data.roles === "teacher"){
                     window.location.replace("/t/dashboard");
                 }
                 else {
-                    window.location.replace("/");
+                    window.location.replace("/"); //send to homepage
                 }
             }
             else {
@@ -70,14 +74,7 @@ class LoginPage extends React.Component {
     handleSignup = (e) => {
         e.preventDefault();
         let canContinue = "";
-        // if (this.state.email === "" || this.state.password === "" || this.state.name === "" || this.state.teacher === "" || this.state.block === "") {
-        //     canContinue = "incomplete";
-        // }
-        // for (let i = 0; i < this.state.teachers.length; i++) {
-        //     if (this.state.teachers[i].name === this.state.teacher) {
-        //         canContinue = "complete";
-        //     }
-        // }
+        //this checks to make sure the email entered is a valid nueva school address
         let domain = "nuevaschool.org"
         var parts = this.state.email.split('@');
         if (parts.length === 2) {
@@ -87,6 +84,7 @@ class LoginPage extends React.Component {
                 canContinue = "emailfailed";
             }
         }
+        //if the email is valid, axios post the new user. They now need to login with their new account.
         if (canContinue === "complete") {
             axios({
                 method: 'post',
@@ -98,7 +96,7 @@ class LoginPage extends React.Component {
                     "email": this.state.email,
                     "password": this.state.password,
                     "teacher": this.state.teacher,
-                    "blocknum": this.state.block,
+                    "blocknum": this.state.block, //block number of the student's class
                     "name": this.state.name
                 }
             })
@@ -131,7 +129,8 @@ class LoginPage extends React.Component {
         })
 
     }
-    renderTeachers = () => {
+    renderTeachers = () => { //lists through all the teachers. This list updates when a new teacher is created. 
+        //this is called later when the page is rendered, so the student can select their teacher
         let teachers = this.state.teachers;
         let out = [];
         for (let i = 0; i < teachers.length; i++) {

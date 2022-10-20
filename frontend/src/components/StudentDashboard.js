@@ -19,9 +19,6 @@ const Modal = ({ handleClose, show, children }) => {
     );
   };
 
-
-
-
 function StudentDashboard() {
     const [currentMonth, setCurrentMonth] = useState(getMonth());
     const {monthIndex} = useContext(GlobalContext);
@@ -187,7 +184,7 @@ function StudentDashboard() {
         }
     }
 
-
+    //renders the student dashboard  components in order (header, modal, sidebar, month)
     return (
         <React.Fragment>
             <CalendarHeader/>

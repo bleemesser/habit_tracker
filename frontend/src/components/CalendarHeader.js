@@ -1,6 +1,8 @@
 import React, { useContext } from 'react'
 import GlobalContext from './calendarContext/GlobalContext';
 import dayjs from 'dayjs';
+
+//see StudentDashboard.js to see the order that this is render in with other components!
 function CalendarHeader() {
     const {monthIndex,setMonthIndex} = useContext(GlobalContext);
     function prevMonth() {
@@ -12,6 +14,8 @@ function CalendarHeader() {
     function resetMonth() {
         setMonthIndex(dayjs().month());
     }
+    
+    //makes a header with arrows (to navitage across months) and the current month name, rendered above the calendar itself. 
     return (
         <header className="px-4 py-2 flex items-center">
             <button className='rounded py-2 px-4 mr-5 btn btn-light' onClick={resetMonth}>Today</button>

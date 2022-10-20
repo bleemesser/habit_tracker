@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import './Home.css';
 
-
+//website homepage, displaying the 3 form buttons
 class Home extends React.Component {
     constructor(props) {
         super(props);
@@ -13,6 +13,7 @@ class Home extends React.Component {
     componentDidMount() {
         this.tokenIsValid();
     }
+    //checks to make sure the user is logged in. If not, send them to LoginPage
     tokenIsValid = () => {
         let token = window.sessionStorage.getItem("token");
         if (token !== null && token !== '') {
