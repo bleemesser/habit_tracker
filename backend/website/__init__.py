@@ -1,11 +1,11 @@
+from re import template
 from flask import Flask
-import os
 from .extensions import db, key
-from .models.usermodel import User
 from .createmaster import create_master
-
+from pathlib import Path
+build_path = Path(__file__).parent.parent.parent / "frontend" / "build"
 def newapp():
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder=build_path,template_folder=build_path)
 
     app.secret_key = key
     # app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///data.db"

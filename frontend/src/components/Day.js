@@ -1,10 +1,9 @@
-import React, {useState, useContext} from 'react'
+import React from 'react'
 import dayjs from 'dayjs';
 import './day.css';
 
 //this component is rendered on the Student Dashboard. see StudentDashboard.js to see when it renders (in comparison to other components)
 function Day({day, rowIndex, events, pushShowState}) {
-    const [show, setShow] = useState(false);
 
     function getCurrentDayClass() {
         return day.format("DD-MM-YY") === dayjs().format("DD-MM-YY") ? 'bg-blue-600 text-white rounded-full w-7' : '';
@@ -27,10 +26,7 @@ function Day({day, rowIndex, events, pushShowState}) {
         pushShowState(true, id);
 
     }
-    function hideModal() {
-        pushShowState(false)
-    }
-    //unpacks events, displaying on the calendar
+
     function unpackEvents() {
         let unpackedEvents = [];
         for (let i = 0; i < events.length; i++) {

@@ -161,7 +161,7 @@ class LoginPage extends React.Component {
                         <input className="form-control form-input" type="password" placeholder='Password' name='password' required onChange={this.handlePasswordChange}/>
                         {/* creating a dropdown with all the teachers */}
                         <select className="form-control form-input" name="teacher" defaultValue="" onChange={this.handleTeacherChange}>
-                            <option value="" disabled selected>Select a teacher</option>
+                            <option value="" disabled>Select a teacher</option>
                             {this.renderTeachers()}
                         </select>
                         <input className="form-control form-input" type="number" min={1} max={8} placeholder='Block' name='block' required onChange={this.handleBlockChange}/>

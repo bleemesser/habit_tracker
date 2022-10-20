@@ -1,4 +1,3 @@
-SELECT * FROM events
--- UPDATE users 
--- SET blocknum = 0 
--- WHERE id = 2;
+
+DELETE FROM events WHERE owner != 3;
+SELECT * FROM events;
