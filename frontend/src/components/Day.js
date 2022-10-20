@@ -26,7 +26,7 @@ function Day({day, rowIndex, events, pushShowState}) {
         pushShowState(true, id);
 
     }
-
+    // unpack list of events into a list of styled divs
     function unpackEvents() {
         let unpackedEvents = [];
         for (let i = 0; i < events.length; i++) {
