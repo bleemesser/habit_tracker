@@ -1,0 +1,6 @@
+services:
+  site:
+    restart: unless-stopped
+    build: .
+    ports:
+      - "5000:5000"
