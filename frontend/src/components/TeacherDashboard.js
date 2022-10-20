@@ -16,6 +16,7 @@ const Modal = ({ handleClose, show, children }) => {
     );
   };
 
+//this page is for the teachers to see a summary of all their students (accounts connected to that teacher, see LoginPage)
 class TeacherDashboard extends React.Component {
 
     constructor(props) {
@@ -40,6 +41,7 @@ class TeacherDashboard extends React.Component {
             teachers: [],
             sortType: "blocknum"
         };
+        //binds all the variables :D there are so many
         this.studentsList = this.studentsList.bind(this);
         this.selectStudent = this.selectStudent.bind(this);
         this.showForm = this.showForm.bind(this);
@@ -137,6 +139,7 @@ class TeacherDashboard extends React.Component {
                     }
                 })
     }
+    //creating a new teacher
     showTeacherForm = () => {
         if (this.state.creatingTeacher === true) {
             return (
@@ -259,7 +262,7 @@ class TeacherDashboard extends React.Component {
             }
         }, this.showModal)
     }
-
+    //button allows teachers to delete students from class
     deleteStudent = (e) => {
         axios({
                 method: 'post',
@@ -277,6 +280,7 @@ class TeacherDashboard extends React.Component {
                 this.componentDidMount();
             })
     }
+    //button allows teachers to edit students' attributes
     editStudent = (e) => {
         e.preventDefault();
         axios({
@@ -305,7 +309,7 @@ class TeacherDashboard extends React.Component {
                 }
             })
     }
-
+    //updates the table after a change
     onChangeBlock = (e) => {
         let student = this.state.selectedStudent;
         student["blocknum"] = e.target.value;
@@ -314,7 +318,7 @@ class TeacherDashboard extends React.Component {
         });
         // console.log(this.state.selectedStudent);
     }
-
+    //updates the table after a change
     onChangeName = (e) => {
         let student = this.state.selectedStudent;
         student["name"] = e.target.value;
@@ -322,7 +326,7 @@ class TeacherDashboard extends React.Component {
             selectedStudent: student
         });
     }
-
+    //updates the table after a change
     onChangeTeacher = (e) => {
         let student = this.state.selectedStudent;
         student["teacher"] = e.target.value;
@@ -378,6 +382,7 @@ class TeacherDashboard extends React.Component {
             this.setState({ showModal: false });
         }
     };
+    //listing the student information in order
     studentsList = () => {
         if (this.state.loggedIn === false) {
             return <Navigate to='/login' />

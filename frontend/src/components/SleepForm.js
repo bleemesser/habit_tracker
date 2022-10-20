@@ -2,15 +2,20 @@ import React from 'react';
 import axios from 'axios';
 import './Form.css';
 
+//1 of the 3 student-side forms. form data is passed to backend to be displayed on student dashboard.
 class SleepForm extends React.Component {
     constructor(props) {
         super(props);
+        //questions are labeled simply as "q1," "q2," etc. 
+        //Eventdate is seperate, as it is passed on its own (see axios section)
         this.state = {q1: '',q2:'',q3:'',q4:'',eventdate:'',q5:''};
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    //properly updates the state with the current value of each input, logging it all to console. 
+    //The console message will be 1 behind the actual values at all times, it's not broken, the logging is just flawed.
     handleChange = (e) => {
         let qnum = e.target.getAttribute("question");
         if (qnum === "1") {
@@ -41,8 +46,10 @@ class SleepForm extends React.Component {
         url: '/submit/sleep',
         headers: {
           'Content-Type': 'application/json',
+          //checks that the user is logged in
           'token':window.sessionStorage.getItem('token')
         },
+        //eventdate is passed seperately from the other questions, as it is used on the dashboards to catalogue items.
         params: {
           eventdate: this.state.eventdate
         },
@@ -55,6 +62,7 @@ class SleepForm extends React.Component {
       }})
       .then((response) => {
         console.log(response);
+        //returns to homepage
         window.location.replace("/");
       })
       .catch((error) => {

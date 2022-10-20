@@ -2,12 +2,13 @@ import React from 'react'
 import dayjs from 'dayjs';
 import './day.css';
 
-
+//this component is rendered on the Student Dashboard. see StudentDashboard.js to see when it renders (in comparison to other components)
 function Day({day, rowIndex, events, pushShowState}) {
 
     function getCurrentDayClass() {
         return day.format("DD-MM-YY") === dayjs().format("DD-MM-YY") ? 'bg-blue-600 text-white rounded-full w-7' : '';
     }
+    //determines the visual appearance of the habit logs when displayed on the calendar
     function setEventBg(type) {
         if (type === "procrastination") {
             return 'rgb(255, 199, 222)';
@@ -19,11 +20,13 @@ function Day({day, rowIndex, events, pushShowState}) {
             return 'rgb(254, 255, 188)';
         }
     }
+    //makes a simple modal appear, showing relevant log information
     function showModal(e) {
         let id = e.target.id;
         pushShowState(true, id);
 
     }
+
     function unpackEvents() {
         let unpackedEvents = [];
         for (let i = 0; i < events.length; i++) {
