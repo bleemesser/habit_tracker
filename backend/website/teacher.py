@@ -13,6 +13,7 @@ teacher = Blueprint("teacher", __name__)
 def dashboard(current_user):
     # pull users from database and send it to the frontend
     # does not require any input from the frontend
+    
     if current_user.email == "master@teacher":
         users = User.query.filter(User.email != "master@teacher").all()
     else:
@@ -35,18 +36,23 @@ def dashboard(current_user):
 @teacher_token_required
 def delete_student(current_user):
     # requires "email" in the request body and a content type of application/json
-    data = request.get_json()
-    user = User.query.filter_by(email=data["email"]).first()
-    # print(user)
-    db.session.execute(db.delete(User).where(User.email == data["email"]))
-    db.session.commit()
-    db.session.execute(db.delete(Event).where(Event.owner == user.id))
-    db.session.commit()
-    return {
-        "status": "success",
-        "message": "Student deleted successfully",
-    }
-
+    try:
+        data = request.get_json()
+        user = User.query.filter_by(email=data["email"]).first()
+        # print(user)
+        db.session.execute(db.delete(User).where(User.email == data["email"]))
+        db.session.commit()
+        db.session.execute(db.delete(Event).where(Event.owner == user.id))
+        db.session.commit()
+        return {
+            "status": "success",
+            "message": "Student deleted successfully",
+        }
+    except KeyError:
+        return {
+            "status": "error",
+            "message": "Missing required field",
+        }
 
 @teacher.route("/edit-student", methods=["POST"])
 @teacher_token_required
