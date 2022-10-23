@@ -44,8 +44,8 @@ function StudentDashboard() {
                 let events = JSON.parse(response.data.data)["events"]
                 for (let i = 0; i < events.length; i++) {
                     // for loop through events[i] dictionary
-                    for (let key in events[i]["data"]) {
-                        events[i]['data'][key] = events[i]['data'][key].replace("&#39;","'").replace("&#34;",'"')
+                    for (let key in events[i]["data"]['data']) {
+                        events[i]['data']['data'][key] = events[i]['data']['data'][key].replace("&#39;","'").replace("&#34;",'"')
                     }
 
                 }

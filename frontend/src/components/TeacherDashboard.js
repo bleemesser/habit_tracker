@@ -91,9 +91,9 @@ class TeacherDashboard extends React.Component {
                         for (let i = 0; i < data.length; i++) { // replaces the &#39; with ' for the question responses
                             let events = data[i]["events"];   
                             for (let j = 0; j < events.length; j++) {
-                                let questions = events[j]["data"];
-                                for (let key in questions) {
-                                    events[j]["data"][key] = events[j]["data"][key].replace("&#39;","'").replace("&#34;",'"');
+                                let questions = events[j]["data"]["data"];
+                                for (let k in questions) {
+                                    questions[k] = questions[k].replace('&#39;', "'").replace('&#34;', '"');
                                 }
                             }
                         }

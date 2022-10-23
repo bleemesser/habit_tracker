@@ -8,3 +8,15 @@
     - fix: 
         - in the \_\_repr\_\_ method of the Event model, use html escaping for the response data. Thus when the backend returns the events as a string, it will be properly escaped.
         - in the frontend, when the data is received in TeacherDashboard.js and StudentDashboard.js, un-escape the data so it can be properly represented and not cause json parsing errors.
+
+
+
+# Features:
+## High Priority
+- Deployment: dockerize the app more fully including the database, in a way where the database is safe and can be easily backed up in case of failure.
+
+## Medium Priority
+- Passwords: add functionality for students to be able to reset their passwords via email. The teacher should not be able to do this for them because the data the students are submitting could be personal and should be kept private. This feature will take some work because it will require frontend and (major) backend changes, as well as an email server to send the emails from.
+
+## Low priority but cool
+- Data analysis: analyze students responses to the forms to help them identify causes behind them procrastinating, losing sleep, or feeling emotionally hurt/unstable.
