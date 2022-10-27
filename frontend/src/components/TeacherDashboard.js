@@ -193,7 +193,7 @@ class TeacherDashboard extends React.Component {
                     <small id="namesmall" className="form-text text-muted">Name</small>
                     <input style={{minWidth:'fit-content'}} aria-describedby="namesmall" className="form-control form-control-sm" type="text" name="name" placeholder={this.state.selectedStudent["name"]} onChange={this.onChangeName} />
                     <small id="teachersmall" className="form-text text-muted">Teacher</small>
-                    <select className="form-control form-control-sm" name="teacher" defaultValue="" onChange={this.handleTeacherChange}>
+                    <select className="form-control form-control-sm" name="teacher" defaultValue="" onChange={this.onChangeTeacher}>
                             <option value="" disabled>Select a teacher</option>
                             {this.createDataList()}
                     </select>
@@ -276,8 +276,13 @@ class TeacherDashboard extends React.Component {
                 }
             })
             .then((res) => {
-                alert("User deleted!");
-                this.componentDidMount();
+                if (res.data.status === "success") {
+
+                    alert("User deleted!");
+                    this.componentDidMount();
+                } else {
+                    alert(res.data.message);
+                }
             })
     }
     //button allows teachers to edit students' attributes
@@ -303,7 +308,7 @@ class TeacherDashboard extends React.Component {
                 if (res.data.status === "success") {
                     this.componentDidMount();
                     this.setState({showModal:false});
-                    // need to redirect to login page
+                    window.location.reload(); // SEE BUGS LIST FOR WHY WE RELOAD THE PAGE
                 } else {
                     alert(res.data.message);
                 }

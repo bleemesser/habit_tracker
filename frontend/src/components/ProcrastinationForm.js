@@ -39,7 +39,7 @@ class ProcrastinationForm extends React.Component {
         if (qnum === "6") {
           this.setState({q6:e.target.value})
         }
-        console.log(this.state)
+        // console.log(this.state)
       }
     
     handleSubmit = (e) => {
@@ -65,7 +65,7 @@ class ProcrastinationForm extends React.Component {
           q6: this.state.q6
       }})
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         //returns to homepage
         window.location.replace("/");
       })

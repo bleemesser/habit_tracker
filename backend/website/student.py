@@ -39,7 +39,7 @@ def download(current_user):
         # print(str(event).replace("'", '"'))
         event_dict = json.loads(str(event).replace("'", '"'))
         for q in event_dict["data"]:
-            event_dict[q] = event_dict["data"][q]
+            event_dict[q] = event_dict["data"][q].replace('&#39;', "'").replace('&#34;', '"')
         del event_dict["data"]
         # we've already copied the data into the main dict, so we don't need it anymore
         del event_dict["owner"]

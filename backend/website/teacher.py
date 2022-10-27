@@ -19,7 +19,7 @@ def dashboard(current_user):
     else:
         users = User.query.filter_by(roles="student", teacher=current_user.name).all()
     sort_type = request.headers["sort"]
-    print(f"sort: {sort_type}")
+    # print(f"sort: {sort_type}")
     if sort_type == "name":
         sort = sorted(users, key=lambda x: x.name)
     elif sort_type == "blocknum":
@@ -61,6 +61,7 @@ def edit_student(current_user):
     # there is probably a neater way to not specify the kwargs if the request doesn't update them but this works and i don't care enough
     data = request.get_json()
     if "name" in data:
+        # print('updating name', data["name"])
         db.session.execute(
             db.update(User)
             .where(User.email == data["email"])
@@ -70,6 +71,7 @@ def edit_student(current_user):
         )
         db.session.commit()
     if "teacher" in data:
+        # print('updating teacher', data["teacher"])
         db.session.execute(
             db.update(User)
             .where(User.email == data["email"])
@@ -79,6 +81,7 @@ def edit_student(current_user):
         )
         db.session.commit()
     if "blocknum" in data:
+        # print('updating blocknum', data["blocknum"])
         db.session.execute(
             db.update(User)
             .where(User.email == data["email"])

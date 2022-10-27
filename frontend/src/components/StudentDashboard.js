@@ -42,13 +42,14 @@ function StudentDashboard() {
             if (response.data["status"] === "success") {
                 // console.log(response.data["data"])
                 let events = JSON.parse(response.data.data)["events"]
-                for (let i = 0; i < events.length; i++) {
-                    // for loop through events[i] dictionary
-                    for (let key in events[i]["data"]['data']) {
-                        events[i]['data']['data'][key] = events[i]['data']['data'][key].replace("&#39;","'").replace("&#34;",'"')
-                    }
-
-                }
+                // iterate through events and replace the escaped quotes with the actual character (SEEMS NOT TO WORK SOME OF THE TIME... REPLACED BY renderEvent())
+                
+                // for (let i = 0; i < events.length; i++) {
+                //     // for loop through events[i] dictionary
+                //     for (let key in events[i]["data"]['data']) {
+                //         events[i]['data']['data'][key] = events[i]['data']['data'][key].replace("&#39;","'").replace("&#34;",'"')
+                //     }
+                // }
                 setEvents(events);
             }
             else if (response.data["status"] === "autherror") {
@@ -78,6 +79,10 @@ function StudentDashboard() {
         for (let i = 0; i < events.length; i++) {
             if (events[i].id === eventId) {
                 let event = events[i];
+                for (let q in event["data"]) {
+                    event["data"][q] = event["data"][q].replace("&#39;","'").replace("&#34;",'"')
+                    // instead of unescaping the quotes in the get request, we can just do it here (MUCH EASIER AND LESS BUGGY, IDK WHY)
+                }
                 if (event.type === 'procrastination') {
                     return (
                         <div className='m-5'>

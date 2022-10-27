@@ -36,7 +36,7 @@ class SleepForm extends React.Component {
         if (qnum === "5") {
         this.setState({q5:e.target.value})
         }
-        console.log(this.state)
+        // console.log(this.state)
       }
     
     handleSubmit = (e) => {
@@ -61,7 +61,7 @@ class SleepForm extends React.Component {
           q5: this.state.q5
       }})
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         //returns to homepage
         window.location.replace("/");
       })
