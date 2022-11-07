@@ -25,3 +25,7 @@ At the moment, running `docker-compose up` will start the server and serve the f
 
 ## Usage
 The app is fairly simple to set up. All student accounts must have a teacher account associated with them. When the app is first run, assuming the steps were followed in the installation section, there will be a master account. This master account cannot be used as a teacher for a student account, but can be used to create and delete teacher accounts. To do so, open the app and navigate to `/login`. Log in with your master credentials, the email is `master@teacher` and the password is whatever you set. Once logged in, click the `Dashboard` button in the top left. On the dashboard, there is a black button in the top left labeled `Create Teacher`. Click this button and fill out the form. Once the teacher is created, the master account should be logged out and only used if a teacher account is lost or needs to be deleted. From here, students can be created on the login page using the second form. Students should do this themselves. Once a student has been created, they can log in and begin logging events.
+
+## Contributing
+- Follow [this](https://akrabat.com/the-beginners-guide-to-contributing-to-a-github-project/) guide for how to contribute. 
+- We are not using git-flow, so fork from master. 
