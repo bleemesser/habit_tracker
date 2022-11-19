@@ -1,6 +1,10 @@
 import React from 'react';
 import axios from 'axios';
-import './Home.css';
+import About from '../reidcomponents/about';
+import Bio from '../reidcomponents/bio';
+import Data from '../reidcomponents/data';
+import './Home.scss';
+
 
 //website homepage, displaying the 3 form buttons
 class Home extends React.Component {
@@ -44,26 +48,35 @@ class Home extends React.Component {
     buttonDisplay = () => {
         if (this.state.auth === true) {
             return (
-                <div className="vstack d-flex justify-content-md center align-items-center vh-100 gap-5">                
+                <div>
+                    <div className="vstack d-flex justify-content-md center align-items-center vh-100 gap-5">            
                     <a className="btn btn-primary formtype d-flex align-items-center justify-content-center" role="button" style={{background: '#ffc7de'}} href="/procrastination"><span>Procrastination</span></a>
                     <a className="btn btn-primary formtype d-flex align-items-center justify-content-center" role="button" style={{background: '#bcf3ff'}} href="/sleep"><span>Sleep</span></a>
                     <a className="btn btn-primary formtype d-flex align-items-center justify-content-center" role="button" style={{background: '#feffbc'}} href="/feelings"><span>Feelings</span></a>
+                    </div>
                 </div>
+                
             );
         }
         else {
             return (
-                <div className="vstack d-flex justify-content-md center align-items-center vh-100 gap-5">                
-                    <a className="btn btn-primary formtype d-flex align-items-center justify-content-center" role="button" style={{background: '#ffc7de'}} href="/login"><span>Procrastination</span></a>
-                    <a className="btn btn-primary formtype d-flex align-items-center justify-content-center" role="button" style={{background: '#bcf3ff'}} href="/login"><span>Sleep</span></a>
-                    <a className="btn btn-primary formtype d-flex align-items-center justify-content-center" role="button" style={{background: '#feffbc'}} href="/login"><span>Feelings</span></a>
+                <div className="ml-0 justify-center align-items-center mb-30 gap-5">
+                    
+                    <div className="vstack d-flex justify-content-md center align-items-center vh-100 gap-5 ml-60 mb-15">
+                        <Bio></Bio>
+                    </div>
+                    {/* Extra component if you want color contrast <Data></Data> */}
+                    <div className="vstack d-flex justify-content-md center align-items-center vh-100 gap-5 ml-60">
+                        <About></About>
+                    </div>
+                    
                 </div>
             );
         }
     }
     render() {
         return (
-            <div className="container" style={{marginTop:'6vh'}}>
+            <div className="container" style={{marginTop:'16vh', marginLeft:'0vh'}}>
                 {this.buttonDisplay()}
             </div>
         );
