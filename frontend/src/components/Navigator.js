@@ -28,6 +28,9 @@ class Navigator extends React.Component {
                 <div className='wrapper'>
                     <a id='dashboardbtn' className="btn btn-light me-2 navstyle" role='button' href={this.state.href} >Dashboard</a>
                 </div>
+                {/* <div className='wrapper'>
+                    <a id='dashboardbtn' className="btn btn-light me-2 navstyle" role='button' href={this.state.href} >Calendar</a>
+                </div> */}
                 <div className='wrapper'>
                     <a className="navbar-brand navstyle" href="/" style={{justifyContent:'center', fontSize:'20pt',display:'flex'}}>
                         <span style={{textAlign:"center"}}>SEL Habits Analysis</span>
