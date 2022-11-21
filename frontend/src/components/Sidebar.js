@@ -1,6 +1,11 @@
 import React from 'react'
 import './sidebar.css'
 import axios from 'axios'
+import {Chart, ArcElement} from 'chart.js'
+import { Doughnut } from 'react-chartjs-2';
+
+Chart.register(ArcElement); // This is required
+
 //the sidebar is a component used in the student dashboard, displaying a sort of overview
 class Sidebar extends React.Component { // simple sidebar to display the most basic stats, could/should be expanded to include more in-depth analysis
     constructor(props) {
@@ -11,6 +16,7 @@ class Sidebar extends React.Component { // simple sidebar to display the most ba
     componentDidMount() {
         this.unpackEvents();
     }
+    
     //tracking number of each form submitted by this student as well as the total
     unpackEvents() {
         let pcount = 0;
@@ -60,6 +66,49 @@ class Sidebar extends React.Component { // simple sidebar to display the most ba
             </table>
         );
     }
+
+    // Get data for chart
+    getData() {
+        let procrastinationCount = 100;
+        let sleepCount = 120;
+        let feelingsCount = 300;
+        for (let i = 0; i < this.props.events.length; i++) {
+            if (this.props.events[i].type === "procrastination") {
+                procrastinationCount++;
+            }
+            else if (this.props.events[i].type === "sleep") {
+                sleepCount++;
+            }
+            else if (this.props.events[i].type === "feelings") {
+                feelingsCount++;
+            }
+        }
+        const data =  {
+            labels: ['Procrastination', 'Sleep', 'Feelings'],
+            datasets: [
+                {
+                    label: 'Number of Events',
+                    data: [procrastinationCount, sleepCount, feelingsCount],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)', // red (procrastination)
+                        'rgba(54, 162, 235, 0.2)', // blue (sleep)
+                        'rgba(255, 206, 86, 0.2)'  // yellow (feelings)
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)', 
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)'
+                    ],
+                    borderWidth: 1,
+                },
+            ],
+        };
+        return (
+            <Doughnut data={data} />
+        );
+    }
+
+
     //allow the student to download a csv of their form history
     exportEvents() {
         axios({
@@ -88,13 +137,14 @@ class Sidebar extends React.Component { // simple sidebar to display the most ba
         );
     }
 
-
     render() {
         return (
             <aside className='border py-4 px-2 w-64 flex flex-col justify-top items-center'>
                 <h3 className='text-center text-lg'>Logs:</h3>
                {this.unpackEvents()}
                <button className='btn btn-light' onClick={this.exportEvents}>Download Data</button>
+                <h3 className='text-center text-lg'>Data Visualization:</h3>
+                {this.getData()}'
             </aside>
         )
     }
