@@ -3,7 +3,8 @@ import json
 import datetime
 
 """Currently tested: signup, login, csv download, all 3 forms
-Need to test: teacher dashboard, student dashboard, teacher routes: edit-student, delete-student"""
+Need to test: teacher dashboard, student dashboard, teacher routes: edit-student, delete-student
+RUN THE BACKEND BEFORE RUNNING THIS SCRIPT"""
 
 
 def test_signup():
@@ -155,28 +156,19 @@ def test_form_submit():
     token= json.loads(r.text)['token']
     # post to each url
     r1 = requests.post(url2+eventdatestr, headers={'token':token}, json={
-        'eventdate':str(datetime.datetime.utcnow()),
-        'data':{
-            'q1':" \" ",
-            'q2':" \' ",
-            'q3':" \n\t"
-        }
+        'q1':" \" ",
+        'q2':" \' ",
+        'q3':" \n\t"
     })
     r2 = requests.post(url3+eventdatestr, headers={'token':token}, json={
-        'eventdate':str(datetime.datetime.utcnow()),
-        'data':{
-            'q1':"\" ",
-            'q2':" \' ",
-            'q3':" \n\t"
-        }
+        'q1':"\" ",
+        'q2':" \' ",
+        'q3':" \n\t"
     })
     r3 = requests.post(url4+eventdatestr, headers={'token':token}, json={
-        'eventdate':str(datetime.datetime.utcnow()),
-        'data':{
-            'q1':" \" ",
-            'q2':" \' ",
-            'q3':" \n\t"
-        }
+        'q1':" \" ",
+        'q2':" \' ",
+        'q3':" \n\t"
     })
     # check status and print output on success and failure
     if json.loads(r1.text)['status'] == 'success':
