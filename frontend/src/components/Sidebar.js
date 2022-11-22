@@ -50,16 +50,16 @@ class Sidebar extends React.Component { // simple sidebar to display the most ba
                 label: 'Number of Events',
                 data: [pcount, scount, fcount],
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)', //red: procrastination
-                    'rgba(54, 162, 235, 0.2)', //blue: sleep
-                    'rgba(255, 206, 86, 0.2)'  //yellow: feelings
+                    'rgba(255, 199, 222, 0.4)', //red: procrastination
+                    'rgba(188, 243, 255, 0.4)', //blue: sleep
+                    'rgba(254, 255, 188, 0.4)'  //yellow: feelings
                 ],
                 borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)'
+                    'rgba(255, 199, 222, 1)',
+                    'rgba(188, 243, 255, 1)', 
+                    'rgba(254, 255, 188, 1)' 
                 ],
-                borderWidth: 1,
+                borderWidth: 2,
             }],
         };
 
@@ -67,16 +67,16 @@ class Sidebar extends React.Component { // simple sidebar to display the most ba
             <div className="Data">
                 <table className='table table-sm table-borderless' id='statstable'>
                     <tbody>
-                        <tr>
-                            <th className="text-[#ff6384]">Procrastination</th>
+                        <tr className='bg-[#ffc7de]/60'>
+                            <th className="">Procrastination</th>
                             <td>{pcount}</td>
                         </tr>
-                        <tr>
-                            <th className="text-[#36a3eb]">Sleep</th>
+                        <tr className='bg-[#bcf3ff]/60'>
+                            <th className="">Sleep</th>
                             <td>{scount}</td>
                         </tr>
-                        <tr>
-                            <th className="text-[#ffcf56]">Feelings</th>
+                        <tr className='bg-[#feffbc]/60'>
+                            <th className="">Feelings</th>
                             <td>{fcount}</td>
                         </tr>
                         <tr>
@@ -87,10 +87,10 @@ class Sidebar extends React.Component { // simple sidebar to display the most ba
                             <th>Last Submission</th>
                             <td>{lasteventdate}</td>
                         </tr>
-                        <button className='btn btn-light' onClick={this.exportEvents}>Download Data</button>
                     </tbody>
                 </table>
                 <Doughnut data={data} />
+                <button className='btn btn-light downloadbtn' onClick={this.exportEvents}>Download Data</button>
             </div>
         );
     }

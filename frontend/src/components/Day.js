@@ -11,13 +11,13 @@ function Day({day, rowIndex, events, pushShowState}) {
     //determines the visual appearance of the habit logs when displayed on the calendar
     function setEventBg(type) {
         if (type === "procrastination") {
-            return 'rgb(255, 199, 222)';
+            return 'rgb(255, 199, 222,0.6)';
         }
         else if (type === "sleep") {
-            return 'rgb(188, 243, 255)';
+            return 'rgb(188, 243, 255,0.6)';
         }
         else if (type === "feelings") {
-            return 'rgb(254, 255, 188)';
+            return 'rgb(254, 255, 188,0.6)';
         }
     }
     //makes a simple modal appear, showing relevant log information
@@ -33,7 +33,7 @@ function Day({day, rowIndex, events, pushShowState}) {
             let id =  events[i].id;
             if (events[i].event_date === day.format("MM-DD-YYYY")) {
                 unpackedEvents.push(
-                    <div key={i} id={id} onClick={showModal} style={{backgroundColor: `${setEventBg(events[i].type)}`,overflow:'hidden'}} className='text-sm text-center calevent rounded mb-1 '>
+                    <div key={i} id={id} onClick={showModal} style={{backgroundColor: `${setEventBg(events[i].type)}`,overflow:'hidden',fontWeight:"bold"}} className='text-sm text-center calevent rounded mb-1 '>
                         {events[i].type[0].toUpperCase() + events[i].type.substring(1)}{/* capitalize first letter */}
                     </div>
                 );

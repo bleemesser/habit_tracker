@@ -148,7 +148,7 @@ class TeacherDashboard extends React.Component {
                         <input type="text" className="form-control teacher-form-input" placeholder='Name' onChange={this.onChangeTeacherName}/>
                         <input type="text" className="form-control teacher-form-input" placeholder='Email' onChange={this.onChangeTeacherEmail}/>
                         <input type="password" className="form-control teacher-form-input" placeholder='Password' onChange={this.onChangeTeacherPassword}/>
-                        <input type="submit" value="Submit" className="form-control teacher-form-input btn btn-dark"/>
+                        <input type="submit" value="Submit" className="form-control teacher-form-input btn btn-secondary"/>
                     </div>
                 </form>
             )
@@ -199,7 +199,7 @@ class TeacherDashboard extends React.Component {
                     </select>
                     <small id="blocksmall" className="form-text text-muted">Block</small>
                     <input style={{minWidth:'fit-content'}} aria-describedby="blocksmall" className="form-control form-control-sm" type="number" min="1" max="8" name="blocknum" placeholder={this.state.selectedStudent["block"]} onChange={this.onChangeBlock} />
-                    <input className='form-control editform-submitbtn form-control-sm btn btn-sm btn-dark' type="submit" value="Edit Student" style={{minWidth:'fit-content'}} />
+                    <input className='form-control editform-submitbtn form-control-sm btn btn-sm btn-secondary ' type="submit" value="Edit Student" style={{minWidth:'fit-content'}} />
 
                 </form>
                 </div>
@@ -211,45 +211,7 @@ class TeacherDashboard extends React.Component {
         
     }
 
-    selectStudent = (e) => { // DONT CHANGE THIS it was very annoying to set up so that the edit ui would work as a user would intuitively expect:
-        // the user clicks on a student, the edit ui pops up, the user clicks on another student, the edit ui updates to the new student, the user clicks on the same student again, the edit ui disappears
-        // if (e.target.getAttribute('studentemail') !== this.state.selectedStudent["email"] && e.target.getAttribute('studentemail') !== this.state.openForm) {
-        //     this.setState({
-        //         openForm: e.target.getAttribute('studentemail')
-        //     });
-            // let email = e.target.getAttribute('studentemail');
-            // let student = this.state.Students.filter(student => student["email"] === email);
-            // student = student[0];
-        //     this.setState({
-        //         selectedStudent: {
-        //             email: student["email"],
-        //             name: student["name"],
-        //             teacher: student["teacher"],
-        //             block: student["blocknum"]
-        //         }
-        //     })
-        // } else if (this.state.selectedStudent["email"] !== this.state.openForm) {
-        //     let email = e.target.getAttribute('studentemail');
-        //     let student = this.state.Students.filter(student => student["email"] === email);
-        //     student = student[0];
-        //     this.setState({
-        //         selectedStudent: {
-        //             email: student["email"],
-        //             name: student["name"],
-        //             teacher: student["teacher"],
-        //             block: student["blocknum"]
-        //         }
-        //     })
-        // } else {
-        //     this.setState({
-        //         selectedStudent: {
-        //             email: "",
-        //             name: "",
-        //             teacher: "",
-        //             block: ""
-        //         }
-        //     })
-        // }
+    selectStudent = (e) => { // Display edit modal when the edit button is clicked
         let email = e.target.getAttribute('studentemail');
         let student = this.state.Students.filter(student => student["email"] === email);
         student = student[0];
@@ -405,9 +367,9 @@ class TeacherDashboard extends React.Component {
                     <td>{student["events"].length}</td>
                     <td>{student["teacher"]}</td>
                     <td>{student["blocknum"]}</td>
-                    <td><button className="btn btn-dark" id='editbtn' studentemail={student["email"]} onClick={this.selectStudent}>Edit</button></td>
+                    <td><button className="btn btn-secondary " id='editbtn' studentemail={student["email"]} onClick={this.selectStudent}>Edit</button></td>
 
-                    <td><button className='btn btn-dark' studentemail={student["email"]} onClick={this.deleteStudent}>Delete</button></td>
+                    <td><button className='btn btn-secondary ' studentemail={student["email"]} onClick={this.deleteStudent}>Delete</button></td>
                 </tr>
             )
         }
@@ -418,7 +380,7 @@ class TeacherDashboard extends React.Component {
         return( 
             <div className="dashboard container">
                 <div className="teacher-create">
-                    <button className="btn btn-dark" onClick={() => {
+                    <button className="btn btn-secondary " onClick={() => {
                         
                         this.setState({creatingTeacher: !this.state.creatingTeacher})
                     }}>Create Teacher</button>
