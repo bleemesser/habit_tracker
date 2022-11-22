@@ -116,7 +116,7 @@ class SleepForm extends React.Component {
                 <option value="Other">Other</option>
               </select>
             </div>
-            <input className="form-control form-input btn btn-dark" type="submit" value="Submit" />
+            <input className="form-control form-input btn btn-secondary" type="submit" value="Submit" />
           </form>
         </div>
       </div>
