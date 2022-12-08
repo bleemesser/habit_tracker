@@ -1,8 +1,9 @@
 from .models.usermodel import User
 from .extensions import db, bcrypt
 import json
+from pathlib import Path
 
-with open("settings.json", "r") as f:
+with open(Path(__file__).parent.parent / "settings.json", "r") as f:
     settings = json.loads(f.read())
 
 

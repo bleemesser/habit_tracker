@@ -4,10 +4,10 @@ from website import newapp
 from setup import setup_db
 from website.createmaster import create_master, change_master_password
 from flask import send_from_directory
-
+from pathlib import Path
 app = newapp()
 setup_db(app)
-with open("settings.json", "r") as f:
+with open(Path(__file__).parent / "settings.json", "r") as f:
     settings = json.loads(f.read())
 if settings["create_master"] == 1 and settings["master_password"] != "":
     create_master(app)

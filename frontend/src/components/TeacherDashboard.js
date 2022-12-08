@@ -359,7 +359,7 @@ class TeacherDashboard extends React.Component {
         for (let i = 0; i < students.length; i++) {
             let student = students[i]
             out.push(
-                <tr key={student["id"]}>
+                <tr key={student["id"]} className="studenttable">
                     <td>{student["name"]}</td>
                     <td style={{overflow:'clip',maxWidth:'20%'}}>{student["email"]}</td>
                     <td>{student["last_submission"]}</td>
@@ -367,9 +367,9 @@ class TeacherDashboard extends React.Component {
                     <td>{student["events"].length}</td>
                     <td>{student["teacher"]}</td>
                     <td>{student["blocknum"]}</td>
-                    <td><button className="btn btn-secondary " id='editbtn' studentemail={student["email"]} onClick={this.selectStudent}>Edit</button></td>
+                    <td className='studentbtn'><button className="btn btn-secondary " id='editbtn' studentemail={student["email"]} onClick={this.selectStudent}>Edit</button></td>
 
-                    <td><button className='btn btn-secondary ' studentemail={student["email"]} onClick={this.deleteStudent}>Delete</button></td>
+                    <td className='studentbtn'><button className='btn btn-secondary ' studentemail={student["email"]} onClick={this.deleteStudent}>Delete</button></td>
                 </tr>
             )
         }

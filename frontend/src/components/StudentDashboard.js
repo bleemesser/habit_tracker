@@ -85,7 +85,7 @@ function StudentDashboard() {
                 }
                 if (event.type === 'procrastination') {
                     return (
-                        <div className='m-5'>
+                        <div className='m-5 calEvent'>
                             <table className='table table-borderless'>
                                 <tbody>
                                     <tr>
@@ -128,7 +128,7 @@ function StudentDashboard() {
                 }
                 else if (event.type === 'sleep') {
                     return (
-                        <div className='m-5'>
+                        <div className='m-5 calEvent'>
                             <table className='table table-borderless'>
                                 <tbody>
                                     <tr>
@@ -166,7 +166,7 @@ function StudentDashboard() {
                 }
                 else if (event.type === 'feelings') {
                     return (
-                        <div className='m-5'>
+                        <div className='m-5 calEvent'>
                             <table className='table table-borderless'>
                                 <tbody>
                                     <tr>

@@ -76,3 +76,8 @@ td:first-child, th:first-child {
   font-size: 20px;
   cursor: pointer;
 }
+/* select elements of .studenttable that do not contain a button element */
+  /* .studenttable td:not(:has(button)) {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+  } */

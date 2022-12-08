@@ -45,18 +45,18 @@ class Home extends React.Component {
         if (this.state.auth === true) {
             return (
                 <div className="vstack d-flex justify-content-md center align-items-center vh-100 gap-5">                
-                    <a className="btn btn-primary formtype d-flex align-items-center justify-content-center" role="button" style={{background: '#ffc7de'}} href="/procrastination"><span>Procrastination</span></a>
-                    <a className="btn btn-primary formtype d-flex align-items-center justify-content-center" role="button" style={{background: '#bcf3ff'}} href="/sleep"><span>Sleep</span></a>
-                    <a className="btn btn-primary formtype d-flex align-items-center justify-content-center" role="button" style={{background: '#feffbc'}} href="/feelings"><span>Feelings</span></a>
+                    <a className="btn btn-primary formtype d-flex align-items-center justify-content-center" role="button" style={{background: '#ffc7de', borderRadius:"15px"}} href="/procrastination"><span>Procrastination</span></a>
+                    <a className="btn btn-primary formtype d-flex align-items-center justify-content-center" role="button" style={{background: '#bcf3ff', borderRadius:"15px"}} href="/sleep"><span>Sleep</span></a>
+                    <a className="btn btn-primary formtype d-flex align-items-center justify-content-center" role="button" style={{background: '#feffbc', borderRadius:"15px"}} href="/feelings"><span>Feelings</span></a>
                 </div>
             );
         }
         else {
             return (
                 <div className="vstack d-flex justify-content-md center align-items-center vh-100 gap-5">                
-                    <a className="btn btn-primary formtype d-flex align-items-center justify-content-center" role="button" style={{background: '#ffc7de'}} href="/login"><span>Procrastination</span></a>
-                    <a className="btn btn-primary formtype d-flex align-items-center justify-content-center" role="button" style={{background: '#bcf3ff'}} href="/login"><span>Sleep</span></a>
-                    <a className="btn btn-primary formtype d-flex align-items-center justify-content-center" role="button" style={{background: '#feffbc'}} href="/login"><span>Feelings</span></a>
+                    <a className="btn btn-primary formtype d-flex align-items-center justify-content-center" role="button" style={{background: '#ffc7de', borderRadius:"15px"}} href="/login"><span>Procrastination</span></a>
+                    <a className="btn btn-primary formtype d-flex align-items-center justify-content-center" role="button" style={{background: '#bcf3ff', borderRadius:"15px"}} href="/login"><span>Sleep</span></a>
+                    <a className="btn btn-primary formtype d-flex align-items-center justify-content-center" role="button" style={{background: '#feffbc', borderRadius:"15px"}} href="/login"><span>Feelings</span></a>
                 </div>
             );
         }
