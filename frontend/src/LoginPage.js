@@ -114,7 +114,7 @@ class LoginPage extends React.Component {
             alert("Email must be a Nueva email address.");
         }
         else if (canContinue === "") {
-            alert("Invalid teacher name. Please use one of the names in the dropdown.");
+            alert("Oops! Something went wrong. Please reload the page and try again. Possible causes: the block number you specified is out of range (1-8) or you are missing fields in the form.");
         }
     }
     fetchTeachers = () => {
@@ -157,7 +157,7 @@ class LoginPage extends React.Component {
                     </form>
                     <form>
                         <input className="form-control form-input" type="text" placeholder="Name" name="name" required onChange={this.handleNameChange}/>
-                        <input className="form-control form-input" type="text" placeholder='Email' name='email' required onChange={this.handleEmailChange}/>
+                        <input className="form-control form-input" type="text" placeholder='Email (Nueva address only)' name='email' required onChange={this.handleEmailChange}/>
                         <input className="form-control form-input" type="password" placeholder='Password' name='password' required onChange={this.handlePasswordChange}/>
                         {/* creating a dropdown with all the teachers */}
                         <select className="form-control form-input" name="teacher" defaultValue="" onChange={this.handleTeacherChange}>
