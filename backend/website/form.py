@@ -11,6 +11,8 @@ form = Blueprint("form", __name__)
 @form.route("/procrastination", methods=["POST"])
 @token_required
 def register_procrastination(current_user):
+    if current_user.email == "master@teacher":
+        return {"status": "error", "message": "You are not allowed to submit data from the master account!"}
     try:
         req = request.get_json()
         # print(req)
@@ -38,6 +40,10 @@ def register_procrastination(current_user):
 @form.route("/sleep", methods=["POST"])
 @token_required
 def register_sleep(current_user):
+    if current_user.email == "master@teacher":
+        return {"status": "error", "message": "You are not allowed to submit data from the master account!"}
+    elif current_user.roles != "student":
+        return {"status": "error", "message": "You must use a student account to submit this form!"}
     try:
         req = request.get_json()
         db.session.execute(
@@ -62,6 +68,8 @@ def register_sleep(current_user):
 @form.route("/feelings", methods=["POST"])
 @token_required
 def register_feelings(current_user):
+    if current_user.email == "master@teacher":
+        return {"status": "error", "message": "You are not allowed to submit data from the master account!"}
     try:
         req = request.get_json()
         db.session.execute(

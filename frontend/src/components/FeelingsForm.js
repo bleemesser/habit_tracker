@@ -61,7 +61,10 @@ class FeelingsForm extends React.Component {
           q5: this.state.q5
       }})
       .then((response) => {
-        // console.log(response);
+        console.log(response);
+        if (response.data.status === "error") {
+          alert(response.data.message);
+        }
         //returns to homepage
         window.location.replace("/");
       })

@@ -5,5 +5,5 @@
     "create_master":1,
     "change_master_password":0,
     "master_password":"master",
-    "db_is_from_docker":1
+    "db_is_from_docker":0
 }
