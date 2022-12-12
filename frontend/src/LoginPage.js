@@ -73,6 +73,10 @@ class LoginPage extends React.Component {
     }
     handleSignup = (e) => {
         e.preventDefault();
+        if (this.state.teacher === "" || this.state.block === "" || this.state.name === "" || this.state.email === "" || this.state.password === "") {
+            alert("Please fill out all fields.");
+            return;
+        }
         let canContinue = "";
         //this checks to make sure the email entered is a valid nueva school address
         let domain = "nuevaschool.org"
@@ -160,11 +164,21 @@ class LoginPage extends React.Component {
                         <input className="form-control form-input" type="text" placeholder='Email (Nueva address only)' name='email' required onChange={this.handleEmailChange}/>
                         <input className="form-control form-input" type="password" placeholder='Password' name='password' required onChange={this.handlePasswordChange}/>
                         {/* creating a dropdown with all the teachers */}
-                        <select className="form-control form-input" name="teacher" defaultValue="" onChange={this.handleTeacherChange}>
+                        <select className="form-control form-input" name="teacher" defaultValue="" required onChange={this.handleTeacherChange}>
                             <option value="" disabled>Select a teacher</option>
                             {this.renderTeachers()}
                         </select>
-                        <input className="form-control form-input" type="number" min={1} max={8} placeholder='Block' name='block' required onChange={this.handleBlockChange}/>
+                        <select className="form-control form-input" type="number" defaultValue="" name='block' required onChange={this.handleBlockChange}>
+                            <option value="" disabled>Select a block</option>
+                            <option value="1">Block 1</option>
+                            <option value="2">Block 2</option>
+                            <option value="3">Block 3</option>
+                            <option value="4">Block 4</option>
+                            <option value="5">Block 5</option>
+                            <option value="6">Block 6</option>
+                            <option value="7">Block 7</option>
+                            <option value="8">Block 8</option>
+                        </select>
                         <input className="form-control form-input btn submitbtn btn-secondary border-slate-400" type="submit" onClick={this.handleSignup} value="Sign Up"/>
                     </form>
                     <button className="form-control form-input btn btn-secondary border-slate-400" onClick={this.logout}>Log Out</button>
