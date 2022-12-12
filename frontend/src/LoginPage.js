@@ -81,12 +81,10 @@ class LoginPage extends React.Component {
         //this checks to make sure the email entered is a valid nueva school address
         let domain = "nuevaschool.org"
         var parts = this.state.email.split('@');
-        if (parts.length === 2) {
-            if (parts[1] === domain) {
-                canContinue = "complete";
-            } else {
-                canContinue = "emailfailed";
-            }
+        if (parts.length === 2 && parts[1] === domain) {
+            canContinue = "complete";
+        } else {
+            canContinue = "emailfailed";
         }
         //if the email is valid, axios post the new user. They now need to login with their new account.
         if (canContinue === "complete") {
