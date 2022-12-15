@@ -1,0 +1,9 @@
+{
+    "debug":0,
+    "port":"5000",
+    "host":"0.0.0.0",
+    "create_master":1,
+    "change_master_password":0,
+    "master_password":"master",
+    "db_is_from_docker":0
+}
