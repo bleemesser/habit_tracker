@@ -24,10 +24,10 @@ elif [ "$1" = "prod" ]; then
         exit 1
     fi
     if [ "$2" = "--no-attach" ]; then
-        docker-compose build
-        docker-compose up -d
+        docker compose build
+        docker compose up -d
     else
-        docker-compose build
-        docker-compose up
+        docker compose build
+        docker compose up
     fi
 fi
