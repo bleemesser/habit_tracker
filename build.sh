@@ -19,7 +19,7 @@ elif [ "$1" = "prod" ]; then
         echo "Docker is not running or not installed"
         exit 1
     fi
-    if ! command -v docker-compose > /dev/null 2>&1; then
+    if ! command -v docker compose > /dev/null 2>&1; then
         echo "Docker-compose is not installed"
         exit 1
     fi
